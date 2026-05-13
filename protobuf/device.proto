@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+
+
+service DeviceService {
+  rpc DeviceByIMEI (GetDeviceByIMEIReq) returns (GetDeviceByIMEIRes) {}
+}
+
+
+message GetDeviceByIMEIReq {
+  string device_imei = 1;
+}
+
+message GetDeviceByIMEIRes {
+  int64 id = 1;
+  string imei = 2;
+  string mac  = 3;
+  string sim_num  = 4;
+  string barcode = 5;
+  int64 vehicle_id = 6;
+  int64 device_model_id = 7 ;
+  bool is_active = 8 ;
+  string activated_at= 9;
+  string created_at= 10;
+  string updated_at= 11;
+}
