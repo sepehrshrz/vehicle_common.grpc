@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package metric_state_v1;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+
+
+// Backend contract for GpsTelemetry:
+// - valid=true: lat/lon/alt/spd/heading are trustworthy for navigation
+// - valid=false: use satellites/quality/hdop/pdop/avg_cnr/navmode for situational
+//   logic; ignore lat/lon if zero or stale
+// - valid=false, satellites=0 -> antenna/sky problem
+// - valid=false, satellites>0  -> acquiring fix
+// - valid=true               -> normal tracking
+// - sats[] / used_prns: for server-side spoof checks vs expected sky (CelesTrak)
+
+enum MessageKind {
+  KIND_UNSPECIFIED   = 0;
+  TELEMETRY_GPS      = 1;
+  DEVICE_IDENTITY    = 2;
+  FOTA_STATUS        = 3;
+  COMMAND_ACK        = 4;
+  CONFIG             = 10;
+  COMMAND            = 11;
+}
+
+message GpsSatInfo {
+  uint32 prn  = 1;
+  sint32 elev = 2;
+  uint32 azim = 3;
+  uint32 snr  = 4;
+}
+
+message GpsTelemetry {
+  double lat            = 1;
+  double lon            = 2;
+  float  alt            = 3;
+  float  spd            = 4;
+  float  hdop           = 5;
+  bool   valid          = 6;
+  uint32 satellites     = 7;  // GGA tracked count (legacy)
+  float  pdop           = 8;
+  uint32 avg_cnr        = 9;
+  uint32 quality        = 10;
+  uint32 navmode        = 11;
+  float  heading        = 12; // RMC course over ground, degrees
+  uint32 sats_in_view   = 13; // GSV structured count
+  uint32 sats_used      = 14; // GSA used-PRN count
+  repeated uint32 used_prns = 15;
+  repeated GpsSatInfo sats  = 16;
+}
+
+message DeviceIdentity {
+  string device_id  = 1;
+  string imei       = 2;
+  string serial     = 3;
+  string cpu_uid    = 4;
+  string model      = 5;
+  string fw_version = 6;
+}
+
+message FotaConfig {
+  string package_url    = 1;
+  string target_version = 2;
+  bool   force          = 3;
+}
+
+message DeviceConfig {
+  oneof body {
+    FotaConfig fota = 1;
+  }
+}
+
+message DeviceCommand {
+  enum Type {
+    UNSPECIFIED = 0;
+    REBOOT      = 1;
+    SEND_SMS    = 2;
+  }
+  string command_id = 1;
+  Type   type       = 2;
+}
+
+message FotaStatus {
+  enum State {
+    IDLE         = 0;
+    DOWNLOADING  = 1;
+    VERIFYING    = 2;
+    APPLYING     = 3;
+    SUCCESS      = 4;
+    FAILED       = 5;
+  }
+  State  state             = 1;
+  uint32 progress_percent  = 2;
+  string detail            = 3;
+  string current_version   = 4;
+  string target_version    = 5;
+}
+
+message CommandAck {
+  string command_id = 1;
+  bool   ok         = 2;
+  uint32 error_code = 3;
+  string detail     = 4;
+}
+
+message Envelope {
+  uint32      timestamp = 1;
+  uint32      seq       = 2;
+  MessageKind kind      = 3;
+  DeviceIdentity identity = 4;
+  oneof payload {
+    GpsTelemetry   gps          = 10;
+    DeviceIdentity hello        = 11;
+    FotaStatus     fota_status  = 12;
+    CommandAck     command_ack  = 13;
+    DeviceConfig   config       = 20;
+    DeviceCommand  command      = 21;
+  }
+}
