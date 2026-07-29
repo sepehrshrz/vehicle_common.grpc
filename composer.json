@@ -1,0 +1,15 @@
+{
+  "name": "sepehrshrz/vehicle_common.grpc",
+  "description": "Shared protobuf contracts",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Shared\\": "php/Shared/",
+      "GPBMetadata\\": "php/GPBMetadata/"
+    }
+  },
+  "require": {
+    "php": "^8.2",
+    "google/protobuf": "^4.0"
+  }
+}
