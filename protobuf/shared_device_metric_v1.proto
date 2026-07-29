@@ -1,0 +1,185 @@
+syntax = "proto3";
+
+package device_metric_v1;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+// Backend contract for GpsTelemetry:
+// - valid=true: lat/lon/alt/spd/heading are trustworthy for navigation
+// - valid=false: use satellites/quality/hdop/pdop/avg_cnr/navmode for situational
+//   logic; ignore lat/lon if zero or stale
+// - valid=false, satellites=0 -> antenna/sky problem
+// - valid=false, satellites>0  -> acquiring fix
+// - valid=true               -> normal tracking
+// - sats[] / used_prns: for server-side spoof checks vs expected sky (CelesTrak)
+
+enum MessageKind {
+  KIND_UNSPECIFIED   = 0;
+  TELEMETRY_GPS      = 1;
+  DEVICE_IDENTITY    = 2;
+  FOTA_STATUS        = 3;
+  COMMAND_ACK        = 4;  // CommandResponse on wire
+  CONFIG             = 10;
+  COMMAND            = 11;
+}
+
+message GpsSatInfo {
+  uint32 prn  = 1;
+  sint32 elev = 2;
+  uint32 azim = 3;
+  uint32 snr  = 4;
+}
+
+message GpsTelemetry {
+  double lat            = 1;
+  double lon            = 2;
+  float  alt            = 3;
+  float  spd            = 4;
+  float  hdop           = 5;
+  bool   valid          = 6;
+  uint32 satellites     = 7;  // GGA tracked count (legacy)
+  float  pdop           = 8;
+  uint32 avg_cnr        = 9;
+  uint32 quality        = 10;
+  uint32 navmode        = 11;
+  float  heading        = 12; // RMC course over ground, degrees
+  uint32 sats_in_view   = 13; // GSV structured count
+  uint32 sats_used      = 14; // GSA used-PRN count
+  repeated uint32 used_prns = 15;
+  repeated GpsSatInfo sats  = 16;
+}
+
+message DeviceIdentity {
+  string device_id  = 1;
+  string imei       = 2;
+  string serial     = 3;
+  string cpu_uid    = 4;
+  string model      = 5;
+  string fw_version = 6;
+}
+
+message CommandHeader {
+  string command_id = 1;
+  uint32 created_at = 2;   // unix seconds
+  uint32 expire_at  = 3;   // unix seconds, 0 = never
+}
+
+enum CommandStatus {
+  CMD_UNSPECIFIED = 0;
+  CMD_ACCEPTED    = 1;   // long job queued (FOTA)
+  CMD_OK          = 2;
+  CMD_FAILED      = 3;
+  CMD_UNSUPPORTED = 4;
+  CMD_EXPIRED     = 5;
+  CMD_BUSY        = 6;
+}
+
+enum CommandType {
+  CMD_TYPE_UNSPECIFIED = 0;
+  CMD_ECHO       = 1;
+  CMD_REBOOT     = 2;
+  CMD_FOTA       = 3;
+  CMD_GET_CONFIG = 4;
+}
+
+message EchoParams {
+  string message = 1;
+}
+
+message RebootParams {
+  uint32 delay_ms = 1;
+}
+
+message FotaParams {
+  string package_url    = 1;
+  string target_version = 2;
+  bool   force          = 3;
+  bytes  sha256         = 4;  // exactly 32 bytes; required
+}
+
+// Which blocks to return. All false => return every known block.
+message GetConfigParams {
+  bool network = 1;
+  bool sms     = 2;
+  bool gps     = 3;
+  bool logging = 4;
+}
+
+message DeviceCommand {
+  CommandHeader header = 1;
+  CommandType   type   = 2;
+  // Serialized EchoParams | RebootParams | FotaParams | GetConfigParams
+  bytes         params = 3;
+}
+
+message GpsConfig {
+  bool   post_unfixed = 1;
+  uint32 field_mask   = 2;
+}
+
+message NetworkConfig {
+  string apn  = 1;
+  string user = 2;
+  string pass = 3;
+}
+
+message SmsConfig {
+  string recipient = 1;
+  bool   enabled   = 2;
+}
+
+message LoggingConfig {
+  uint32 level = 1;
+}
+
+// Full/partial snapshot of current settings (read path).
+message DeviceConfiguration {
+  NetworkConfig network = 1;
+  SmsConfig     sms     = 2;
+  GpsConfig     gps     = 3;
+  LoggingConfig logging = 4;
+}
+
+// Patch settings (write path). Same blocks; omit = leave unchanged.
+message DeviceConfigurationUpdate {
+  CommandHeader header  = 1;
+  NetworkConfig network = 2;
+  SmsConfig     sms     = 3;
+  GpsConfig     gps     = 4;
+  LoggingConfig logging = 5;
+}
+
+message CommandResponse {
+  CommandHeader header     = 1;
+  CommandStatus status     = 2;
+  uint32        error_code = 3;
+  string        message    = 4;
+  oneof result {
+    DeviceConfiguration config = 10;
+  }
+}
+
+message FotaStatus {
+  enum State {
+    IDLE         = 0;
+    DOWNLOADING  = 1;
+    VERIFYING    = 2;
+    APPLYING     = 3;
+    SUCCESS      = 4;
+    FAILED       = 5;
+  }
+  State  state             = 1;
+  uint32 progress_percent  = 2;
+  string detail            = 3;
+  string current_version   = 4;
+  string target_version    = 5;
+  string command_id        = 6;
+}
+
+message Envelope {
+  uint32         timestamp = 1;
+  uint32         seq       = 2;
+  MessageKind    kind      = 3;
+  DeviceIdentity identity  = 4;
+  // Serialized inner message selected by kind (GpsTelemetry, DeviceCommand, …).
+  bytes          body      = 5;
+}
