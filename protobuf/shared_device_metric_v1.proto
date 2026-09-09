@@ -18,6 +18,7 @@ enum MessageKind {
   DEVICE_IDENTITY    = 2;
   FOTA_STATUS        = 3;
   COMMAND_ACK        = 4;  // CommandResponse on wire
+  TELEMETRY_VEHICLE  = 5;  // VehicleStatus on ingest/telemetry/vehicle
   CONFIG             = 10;
   COMMAND            = 11;
 }
@@ -46,6 +47,19 @@ message GpsTelemetry {
   uint32 sats_used      = 14; // GSA used-PRN count
   repeated uint32 used_prns = 15;
   repeated GpsSatInfo sats  = 16;
+}
+
+// Vehicle I/O on ingest/telemetry/vehicle (separate from GPS).
+// last_shock_at is sticky unix seconds (0 = never); notify when it increases.
+// Device always sets presence (nanopb OPTIONAL) so false/0 still appear on wire.
+message VehicleStatus {
+  optional bool   acc_active    = 1;  // ACC=1 active
+  optional bool   door_active   = 2;  // door signal active (active-low pin)
+  optional bool   shock_level   = 3;  // current shock pin level
+  optional bool   relay_on      = 4;
+  optional uint32 bat_mv        = 5;
+  optional uint32 last_shock_at = 6;
+  optional uint32 reported_at   = 7;  // unix sec of this sample; always set
 }
 
 message DeviceIdentity {
@@ -79,6 +93,7 @@ enum CommandType {
   CMD_REBOOT     = 2;
   CMD_FOTA       = 3;
   CMD_GET_CONFIG = 4;
+  CMD_RELAY      = 5;
 }
 
 message EchoParams {
@@ -102,6 +117,11 @@ message GetConfigParams {
   bool sms     = 2;
   bool gps     = 3;
   bool logging = 4;
+  bool vehicle = 5;
+}
+
+message RelayParams {
+  bool on = 1;
 }
 
 message DeviceCommand {
@@ -122,30 +142,53 @@ message NetworkConfig {
   string pass = 3;
 }
 
-message SmsConfig {
-  string recipient = 1;
-  bool   enabled   = 2;
+message SmsRecipient {
+  string name   = 1;
+  string number = 2;  // E.164, e.g. "+989123456789"
+}
+
+// Shared templates + per-event enables. Replaces legacy SmsConfig on the wire
+// (same DeviceConfiguration.sms / DeviceConfigurationUpdate.sms field numbers).
+message SmsNotificationConfig {
+  repeated SmsRecipient recipients = 1;  // max 5 (nanopb STATIC)
+  bool   enabled           = 2;  // master switch
+  bool   enable_shock      = 3;
+  bool   enable_acc_on     = 4;
+  bool   enable_acc_off    = 5;
+  bool   enable_door_open  = 6;
+  bool   enable_door_close = 7;
+  string msg_shock         = 8;
+  string msg_acc_on        = 9;
+  string msg_acc_off       = 10;
+  string msg_door_open     = 11;
+  string msg_door_close    = 12;
 }
 
 message LoggingConfig {
   uint32 level = 1;
 }
 
+message VehicleConfig {
+  uint32 post_period_ms = 1;  // vehicle status uplink interval (default 1000)
+}
+
 // Full/partial snapshot of current settings (read path).
 message DeviceConfiguration {
-  NetworkConfig network = 1;
-  SmsConfig     sms     = 2;
-  GpsConfig     gps     = 3;
-  LoggingConfig logging = 4;
+  NetworkConfig         network = 1;
+  SmsNotificationConfig sms     = 2;
+  GpsConfig             gps     = 3;
+  LoggingConfig         logging = 4;
+  VehicleConfig         vehicle = 6;
 }
 
 // Patch settings (write path). Same blocks; omit = leave unchanged.
 message DeviceConfigurationUpdate {
-  CommandHeader header  = 1;
-  NetworkConfig network = 2;
-  SmsConfig     sms     = 3;
-  GpsConfig     gps     = 4;
-  LoggingConfig logging = 5;
+  CommandHeader         header  = 1;
+  NetworkConfig         network = 2;
+  SmsNotificationConfig sms     = 3;
+  GpsConfig             gps     = 4;
+  LoggingConfig         logging = 5;
+  VehicleConfig         vehicle = 6;
 }
 
 message CommandResponse {

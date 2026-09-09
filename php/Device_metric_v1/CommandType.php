@@ -31,6 +31,10 @@ class CommandType
      * Generated from protobuf enum <code>CMD_GET_CONFIG = 4;</code>
      */
     const CMD_GET_CONFIG = 4;
+    /**
+     * Generated from protobuf enum <code>CMD_RELAY = 5;</code>
+     */
+    const CMD_RELAY = 5;
 
     private static $valueToName = [
         self::CMD_TYPE_UNSPECIFIED => 'CMD_TYPE_UNSPECIFIED',
@@ -38,6 +42,7 @@ class CommandType
         self::CMD_REBOOT => 'CMD_REBOOT',
         self::CMD_FOTA => 'CMD_FOTA',
         self::CMD_GET_CONFIG => 'CMD_GET_CONFIG',
+        self::CMD_RELAY => 'CMD_RELAY',
     ];
 
     public static function name($value)

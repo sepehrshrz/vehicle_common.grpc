@@ -34,6 +34,12 @@ class MessageKind
      */
     const COMMAND_ACK = 4;
     /**
+     * VehicleStatus on ingest/telemetry/vehicle
+     *
+     * Generated from protobuf enum <code>TELEMETRY_VEHICLE = 5;</code>
+     */
+    const TELEMETRY_VEHICLE = 5;
+    /**
      * Generated from protobuf enum <code>CONFIG = 10;</code>
      */
     const CONFIG = 10;
@@ -48,6 +54,7 @@ class MessageKind
         self::DEVICE_IDENTITY => 'DEVICE_IDENTITY',
         self::FOTA_STATUS => 'FOTA_STATUS',
         self::COMMAND_ACK => 'COMMAND_ACK',
+        self::TELEMETRY_VEHICLE => 'TELEMETRY_VEHICLE',
         self::CONFIG => 'CONFIG',
         self::COMMAND => 'COMMAND',
     ];

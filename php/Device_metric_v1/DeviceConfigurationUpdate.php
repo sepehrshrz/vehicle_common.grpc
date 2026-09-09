@@ -24,7 +24,7 @@ class DeviceConfigurationUpdate extends \Google\Protobuf\Internal\Message
      */
     protected $network = null;
     /**
-     * Generated from protobuf field <code>.device_metric_v1.SmsConfig sms = 3;</code>
+     * Generated from protobuf field <code>.device_metric_v1.SmsNotificationConfig sms = 3;</code>
      */
     protected $sms = null;
     /**
@@ -35,6 +35,10 @@ class DeviceConfigurationUpdate extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>.device_metric_v1.LoggingConfig logging = 5;</code>
      */
     protected $logging = null;
+    /**
+     * Generated from protobuf field <code>.device_metric_v1.VehicleConfig vehicle = 6;</code>
+     */
+    protected $vehicle = null;
 
     /**
      * Constructor.
@@ -44,9 +48,10 @@ class DeviceConfigurationUpdate extends \Google\Protobuf\Internal\Message
      *
      *     @type \Device_metric_v1\CommandHeader $header
      *     @type \Device_metric_v1\NetworkConfig $network
-     *     @type \Device_metric_v1\SmsConfig $sms
+     *     @type \Device_metric_v1\SmsNotificationConfig $sms
      *     @type \Device_metric_v1\GpsConfig $gps
      *     @type \Device_metric_v1\LoggingConfig $logging
+     *     @type \Device_metric_v1\VehicleConfig $vehicle
      * }
      */
     public function __construct($data = NULL) {
@@ -119,8 +124,8 @@ class DeviceConfigurationUpdate extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.device_metric_v1.SmsConfig sms = 3;</code>
-     * @return \Device_metric_v1\SmsConfig|null
+     * Generated from protobuf field <code>.device_metric_v1.SmsNotificationConfig sms = 3;</code>
+     * @return \Device_metric_v1\SmsNotificationConfig|null
      */
     public function getSms()
     {
@@ -138,13 +143,13 @@ class DeviceConfigurationUpdate extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.device_metric_v1.SmsConfig sms = 3;</code>
-     * @param \Device_metric_v1\SmsConfig $var
+     * Generated from protobuf field <code>.device_metric_v1.SmsNotificationConfig sms = 3;</code>
+     * @param \Device_metric_v1\SmsNotificationConfig $var
      * @return $this
      */
     public function setSms($var)
     {
-        GPBUtil::checkMessage($var, \Device_metric_v1\SmsConfig::class);
+        GPBUtil::checkMessage($var, \Device_metric_v1\SmsNotificationConfig::class);
         $this->sms = $var;
 
         return $this;
@@ -210,6 +215,38 @@ class DeviceConfigurationUpdate extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Device_metric_v1\LoggingConfig::class);
         $this->logging = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.device_metric_v1.VehicleConfig vehicle = 6;</code>
+     * @return \Device_metric_v1\VehicleConfig|null
+     */
+    public function getVehicle()
+    {
+        return $this->vehicle;
+    }
+
+    public function hasVehicle()
+    {
+        return isset($this->vehicle);
+    }
+
+    public function clearVehicle()
+    {
+        unset($this->vehicle);
+    }
+
+    /**
+     * Generated from protobuf field <code>.device_metric_v1.VehicleConfig vehicle = 6;</code>
+     * @param \Device_metric_v1\VehicleConfig $var
+     * @return $this
+     */
+    public function setVehicle($var)
+    {
+        GPBUtil::checkMessage($var, \Device_metric_v1\VehicleConfig::class);
+        $this->vehicle = $var;
 
         return $this;
     }

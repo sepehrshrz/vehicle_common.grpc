@@ -31,6 +31,10 @@ class GetConfigParams extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool logging = 4;</code>
      */
     protected $logging = false;
+    /**
+     * Generated from protobuf field <code>bool vehicle = 5;</code>
+     */
+    protected $vehicle = false;
 
     /**
      * Constructor.
@@ -42,6 +46,7 @@ class GetConfigParams extends \Google\Protobuf\Internal\Message
      *     @type bool $sms
      *     @type bool $gps
      *     @type bool $logging
+     *     @type bool $vehicle
      * }
      */
     public function __construct($data = NULL) {
@@ -133,6 +138,28 @@ class GetConfigParams extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->logging = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool vehicle = 5;</code>
+     * @return bool
+     */
+    public function getVehicle()
+    {
+        return $this->vehicle;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool vehicle = 5;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setVehicle($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->vehicle = $var;
 
         return $this;
     }
