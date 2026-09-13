@@ -36,9 +36,9 @@ class VehicleStatus extends \Google\Protobuf\Internal\Message
      */
     protected $shock_level = null;
     /**
-     * Generated from protobuf field <code>optional bool relay_on = 4;</code>
+     * Generated from protobuf field <code>optional bool engine_on = 4;</code>
      */
-    protected $relay_on = null;
+    protected $engine_on = null;
     /**
      * Generated from protobuf field <code>optional uint32 bat_mv = 5;</code>
      */
@@ -66,7 +66,7 @@ class VehicleStatus extends \Google\Protobuf\Internal\Message
      *           door signal active (active-low pin)
      *     @type bool $shock_level
      *           current shock pin level
-     *     @type bool $relay_on
+     *     @type bool $engine_on
      *     @type int $bat_mv
      *     @type int $last_shock_at
      *     @type int $reported_at
@@ -187,33 +187,33 @@ class VehicleStatus extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>optional bool relay_on = 4;</code>
+     * Generated from protobuf field <code>optional bool engine_on = 4;</code>
      * @return bool
      */
-    public function getRelayOn()
+    public function getEngineOn()
     {
-        return isset($this->relay_on) ? $this->relay_on : false;
+        return isset($this->engine_on) ? $this->engine_on : false;
     }
 
-    public function hasRelayOn()
+    public function hasEngineOn()
     {
-        return isset($this->relay_on);
+        return isset($this->engine_on);
     }
 
-    public function clearRelayOn()
+    public function clearEngineOn()
     {
-        unset($this->relay_on);
+        unset($this->engine_on);
     }
 
     /**
-     * Generated from protobuf field <code>optional bool relay_on = 4;</code>
+     * Generated from protobuf field <code>optional bool engine_on = 4;</code>
      * @param bool $var
      * @return $this
      */
-    public function setRelayOn($var)
+    public function setEngineOn($var)
     {
         GPBUtil::checkBool($var);
-        $this->relay_on = $var;
+        $this->engine_on = $var;
 
         return $this;
     }

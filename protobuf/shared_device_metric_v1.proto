@@ -56,7 +56,7 @@ message VehicleStatus {
   optional bool   acc_active    = 1;  // ACC=1 active
   optional bool   door_active   = 2;  // door signal active (active-low pin)
   optional bool   shock_level   = 3;  // current shock pin level
-  optional bool   relay_on      = 4;
+  optional bool   engine_on     = 4;
   optional uint32 bat_mv        = 5;
   optional uint32 last_shock_at = 6;
   optional uint32 reported_at   = 7;  // unix sec of this sample; always set
@@ -93,7 +93,7 @@ enum CommandType {
   CMD_REBOOT     = 2;
   CMD_FOTA       = 3;
   CMD_GET_CONFIG = 4;
-  CMD_RELAY      = 5;
+  CMD_ENGINE     = 5;  // EngineParams.on: true=engine on, false=engine off
 }
 
 message EchoParams {
@@ -120,14 +120,14 @@ message GetConfigParams {
   bool vehicle = 5;
 }
 
-message RelayParams {
-  bool on = 1;
+message EngineParams {
+  bool on = 1;  // true = engine on, false = engine off
 }
 
 message DeviceCommand {
   CommandHeader header = 1;
   CommandType   type   = 2;
-  // Serialized EchoParams | RebootParams | FotaParams | GetConfigParams
+  // Serialized EchoParams | RebootParams | FotaParams | GetConfigParams | EngineParams
   bytes         params = 3;
 }
 
@@ -170,6 +170,7 @@ message LoggingConfig {
 
 message VehicleConfig {
   uint32 post_period_ms = 1;  // vehicle status uplink interval (default 1000)
+  string name           = 2;  // human-readable label, e.g. "Truck-12"
 }
 
 // Full/partial snapshot of current settings (read path).

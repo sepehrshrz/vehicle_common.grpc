@@ -19,6 +19,12 @@ class VehicleConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>uint32 post_period_ms = 1;</code>
      */
     protected $post_period_ms = 0;
+    /**
+     * human-readable label, e.g. "Truck-12"
+     *
+     * Generated from protobuf field <code>string name = 2;</code>
+     */
+    protected $name = '';
 
     /**
      * Constructor.
@@ -28,6 +34,8 @@ class VehicleConfig extends \Google\Protobuf\Internal\Message
      *
      *     @type int $post_period_ms
      *           vehicle status uplink interval (default 1000)
+     *     @type string $name
+     *           human-readable label, e.g. "Truck-12"
      * }
      */
     public function __construct($data = NULL) {
@@ -57,6 +65,32 @@ class VehicleConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkUint32($var);
         $this->post_period_ms = $var;
+
+        return $this;
+    }
+
+    /**
+     * human-readable label, e.g. "Truck-12"
+     *
+     * Generated from protobuf field <code>string name = 2;</code>
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * human-readable label, e.g. "Truck-12"
+     *
+     * Generated from protobuf field <code>string name = 2;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setName($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->name = $var;
 
         return $this;
     }

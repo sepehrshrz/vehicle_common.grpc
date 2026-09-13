@@ -154,7 +154,7 @@ const (
 	CommandType_CMD_REBOOT           CommandType = 2
 	CommandType_CMD_FOTA             CommandType = 3
 	CommandType_CMD_GET_CONFIG       CommandType = 4
-	CommandType_CMD_RELAY            CommandType = 5
+	CommandType_CMD_ENGINE           CommandType = 5 // EngineParams.on: true=engine on, false=engine off
 )
 
 // Enum value maps for CommandType.
@@ -165,7 +165,7 @@ var (
 		2: "CMD_REBOOT",
 		3: "CMD_FOTA",
 		4: "CMD_GET_CONFIG",
-		5: "CMD_RELAY",
+		5: "CMD_ENGINE",
 	}
 	CommandType_value = map[string]int32{
 		"CMD_TYPE_UNSPECIFIED": 0,
@@ -173,7 +173,7 @@ var (
 		"CMD_REBOOT":           2,
 		"CMD_FOTA":             3,
 		"CMD_GET_CONFIG":       4,
-		"CMD_RELAY":            5,
+		"CMD_ENGINE":           5,
 	}
 )
 
@@ -502,7 +502,7 @@ type VehicleStatus struct {
 	AccActive     *bool                  `protobuf:"varint,1,opt,name=acc_active,json=accActive,proto3,oneof" json:"acc_active,omitempty"`    // ACC=1 active
 	DoorActive    *bool                  `protobuf:"varint,2,opt,name=door_active,json=doorActive,proto3,oneof" json:"door_active,omitempty"` // door signal active (active-low pin)
 	ShockLevel    *bool                  `protobuf:"varint,3,opt,name=shock_level,json=shockLevel,proto3,oneof" json:"shock_level,omitempty"` // current shock pin level
-	RelayOn       *bool                  `protobuf:"varint,4,opt,name=relay_on,json=relayOn,proto3,oneof" json:"relay_on,omitempty"`
+	EngineOn      *bool                  `protobuf:"varint,4,opt,name=engine_on,json=engineOn,proto3,oneof" json:"engine_on,omitempty"`
 	BatMv         *uint32                `protobuf:"varint,5,opt,name=bat_mv,json=batMv,proto3,oneof" json:"bat_mv,omitempty"`
 	LastShockAt   *uint32                `protobuf:"varint,6,opt,name=last_shock_at,json=lastShockAt,proto3,oneof" json:"last_shock_at,omitempty"`
 	ReportedAt    *uint32                `protobuf:"varint,7,opt,name=reported_at,json=reportedAt,proto3,oneof" json:"reported_at,omitempty"` // unix sec of this sample; always set
@@ -561,9 +561,9 @@ func (x *VehicleStatus) GetShockLevel() bool {
 	return false
 }
 
-func (x *VehicleStatus) GetRelayOn() bool {
-	if x != nil && x.RelayOn != nil {
-		return *x.RelayOn
+func (x *VehicleStatus) GetEngineOn() bool {
+	if x != nil && x.EngineOn != nil {
+		return *x.EngineOn
 	}
 	return false
 }
@@ -966,27 +966,27 @@ func (x *GetConfigParams) GetVehicle() bool {
 	return false
 }
 
-type RelayParams struct {
+type EngineParams struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	On            bool                   `protobuf:"varint,1,opt,name=on,proto3" json:"on,omitempty"`
+	On            bool                   `protobuf:"varint,1,opt,name=on,proto3" json:"on,omitempty"` // true = engine on, false = engine off
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RelayParams) Reset() {
-	*x = RelayParams{}
+func (x *EngineParams) Reset() {
+	*x = EngineParams{}
 	mi := &file_shared_device_metric_v1_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RelayParams) String() string {
+func (x *EngineParams) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RelayParams) ProtoMessage() {}
+func (*EngineParams) ProtoMessage() {}
 
-func (x *RelayParams) ProtoReflect() protoreflect.Message {
+func (x *EngineParams) ProtoReflect() protoreflect.Message {
 	mi := &file_shared_device_metric_v1_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -998,12 +998,12 @@ func (x *RelayParams) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RelayParams.ProtoReflect.Descriptor instead.
-func (*RelayParams) Descriptor() ([]byte, []int) {
+// Deprecated: Use EngineParams.ProtoReflect.Descriptor instead.
+func (*EngineParams) Descriptor() ([]byte, []int) {
 	return file_shared_device_metric_v1_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *RelayParams) GetOn() bool {
+func (x *EngineParams) GetOn() bool {
 	if x != nil {
 		return x.On
 	}
@@ -1014,7 +1014,7 @@ type DeviceCommand struct {
 	state  protoimpl.MessageState `protogen:"open.v1"`
 	Header *CommandHeader         `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	Type   CommandType            `protobuf:"varint,2,opt,name=type,proto3,enum=device_metric_v1.CommandType" json:"type,omitempty"`
-	// Serialized EchoParams | RebootParams | FotaParams | GetConfigParams
+	// Serialized EchoParams | RebootParams | FotaParams | GetConfigParams | EngineParams
 	Params        []byte `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1416,6 +1416,7 @@ func (x *LoggingConfig) GetLevel() uint32 {
 type VehicleConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	PostPeriodMs  uint32                 `protobuf:"varint,1,opt,name=post_period_ms,json=postPeriodMs,proto3" json:"post_period_ms,omitempty"` // vehicle status uplink interval (default 1000)
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                        // human-readable label, e.g. "Truck-12"
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1455,6 +1456,13 @@ func (x *VehicleConfig) GetPostPeriodMs() uint32 {
 		return x.PostPeriodMs
 	}
 	return 0
+}
+
+func (x *VehicleConfig) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
 }
 
 // Full/partial snapshot of current settings (read path).
@@ -1909,23 +1917,24 @@ const file_shared_device_metric_v1_proto_rawDesc = "" +
 	"satsInView\x12\x1b\n" +
 	"\tsats_used\x18\x0e \x01(\rR\bsatsUsed\x12\x1b\n" +
 	"\tused_prns\x18\x0f \x03(\rR\busedPrns\x120\n" +
-	"\x04sats\x18\x10 \x03(\v2\x1c.device_metric_v1.GpsSatInfoR\x04sats\"\xf3\x02\n" +
+	"\x04sats\x18\x10 \x03(\v2\x1c.device_metric_v1.GpsSatInfoR\x04sats\"\xf6\x02\n" +
 	"\rVehicleStatus\x12\"\n" +
 	"\n" +
 	"acc_active\x18\x01 \x01(\bH\x00R\taccActive\x88\x01\x01\x12$\n" +
 	"\vdoor_active\x18\x02 \x01(\bH\x01R\n" +
 	"doorActive\x88\x01\x01\x12$\n" +
 	"\vshock_level\x18\x03 \x01(\bH\x02R\n" +
-	"shockLevel\x88\x01\x01\x12\x1e\n" +
-	"\brelay_on\x18\x04 \x01(\bH\x03R\arelayOn\x88\x01\x01\x12\x1a\n" +
+	"shockLevel\x88\x01\x01\x12 \n" +
+	"\tengine_on\x18\x04 \x01(\bH\x03R\bengineOn\x88\x01\x01\x12\x1a\n" +
 	"\x06bat_mv\x18\x05 \x01(\rH\x04R\x05batMv\x88\x01\x01\x12'\n" +
 	"\rlast_shock_at\x18\x06 \x01(\rH\x05R\vlastShockAt\x88\x01\x01\x12$\n" +
 	"\vreported_at\x18\a \x01(\rH\x06R\n" +
 	"reportedAt\x88\x01\x01B\r\n" +
 	"\v_acc_activeB\x0e\n" +
 	"\f_door_activeB\x0e\n" +
-	"\f_shock_levelB\v\n" +
-	"\t_relay_onB\t\n" +
+	"\f_shock_levelB\f\n" +
+	"\n" +
+	"_engine_onB\t\n" +
 	"\a_bat_mvB\x10\n" +
 	"\x0e_last_shock_atB\x0e\n" +
 	"\f_reported_at\"\xa7\x01\n" +
@@ -1960,8 +1969,8 @@ const file_shared_device_metric_v1_proto_rawDesc = "" +
 	"\x03sms\x18\x02 \x01(\bR\x03sms\x12\x10\n" +
 	"\x03gps\x18\x03 \x01(\bR\x03gps\x12\x18\n" +
 	"\alogging\x18\x04 \x01(\bR\alogging\x12\x18\n" +
-	"\avehicle\x18\x05 \x01(\bR\avehicle\"\x1d\n" +
-	"\vRelayParams\x12\x0e\n" +
+	"\avehicle\x18\x05 \x01(\bR\avehicle\"\x1e\n" +
+	"\fEngineParams\x12\x0e\n" +
 	"\x02on\x18\x01 \x01(\bR\x02on\"\x93\x01\n" +
 	"\rDeviceCommand\x127\n" +
 	"\x06header\x18\x01 \x01(\v2\x1f.device_metric_v1.CommandHeaderR\x06header\x121\n" +
@@ -1996,9 +2005,10 @@ const file_shared_device_metric_v1_proto_rawDesc = "" +
 	"\rmsg_door_open\x18\v \x01(\tR\vmsgDoorOpen\x12$\n" +
 	"\x0emsg_door_close\x18\f \x01(\tR\fmsgDoorClose\"%\n" +
 	"\rLoggingConfig\x12\x14\n" +
-	"\x05level\x18\x01 \x01(\rR\x05level\"5\n" +
+	"\x05level\x18\x01 \x01(\rR\x05level\"I\n" +
 	"\rVehicleConfig\x12$\n" +
-	"\x0epost_period_ms\x18\x01 \x01(\rR\fpostPeriodMs\"\xb0\x02\n" +
+	"\x0epost_period_ms\x18\x01 \x01(\rR\fpostPeriodMs\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xb0\x02\n" +
 	"\x13DeviceConfiguration\x129\n" +
 	"\anetwork\x18\x01 \x01(\v2\x1f.device_metric_v1.NetworkConfigR\anetwork\x129\n" +
 	"\x03sms\x18\x02 \x01(\v2'.device_metric_v1.SmsNotificationConfigR\x03sms\x12-\n" +
@@ -2064,15 +2074,16 @@ const file_shared_device_metric_v1_proto_rawDesc = "" +
 	"CMD_FAILED\x10\x03\x12\x13\n" +
 	"\x0fCMD_UNSUPPORTED\x10\x04\x12\x0f\n" +
 	"\vCMD_EXPIRED\x10\x05\x12\f\n" +
-	"\bCMD_BUSY\x10\x06*v\n" +
+	"\bCMD_BUSY\x10\x06*w\n" +
 	"\vCommandType\x12\x18\n" +
 	"\x14CMD_TYPE_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bCMD_ECHO\x10\x01\x12\x0e\n" +
 	"\n" +
 	"CMD_REBOOT\x10\x02\x12\f\n" +
 	"\bCMD_FOTA\x10\x03\x12\x12\n" +
-	"\x0eCMD_GET_CONFIG\x10\x04\x12\r\n" +
-	"\tCMD_RELAY\x10\x05BBZ@github.com/sepehrshrz/vehicle_common.grpc/genproto/device;deviceb\x06proto3"
+	"\x0eCMD_GET_CONFIG\x10\x04\x12\x0e\n" +
+	"\n" +
+	"CMD_ENGINE\x10\x05BBZ@github.com/sepehrshrz/vehicle_common.grpc/genproto/device;deviceb\x06proto3"
 
 var (
 	file_shared_device_metric_v1_proto_rawDescOnce sync.Once
@@ -2102,7 +2113,7 @@ var file_shared_device_metric_v1_proto_goTypes = []any{
 	(*RebootParams)(nil),              // 10: device_metric_v1.RebootParams
 	(*FotaParams)(nil),                // 11: device_metric_v1.FotaParams
 	(*GetConfigParams)(nil),           // 12: device_metric_v1.GetConfigParams
-	(*RelayParams)(nil),               // 13: device_metric_v1.RelayParams
+	(*EngineParams)(nil),              // 13: device_metric_v1.EngineParams
 	(*DeviceCommand)(nil),             // 14: device_metric_v1.DeviceCommand
 	(*GpsConfig)(nil),                 // 15: device_metric_v1.GpsConfig
 	(*NetworkConfig)(nil),             // 16: device_metric_v1.NetworkConfig
