@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+
+
+// Backend contract for GpsTelemetry:
+// - valid=true: lat/lon/alt/spd/heading are trustworthy for navigation
+// - valid=false: use satellites/quality/hdop/pdop/avg_cnr/navmode for situational
+//   logic; ignore lat/lon if zero or stale
+// - valid=false, satellites=0 -> antenna/sky problem
+// - valid=false, satellites>0  -> acquiring fix
+// - valid=true               -> normal tracking
+// - sats[] / used_prns: for server-side spoof checks vs expected sky (CelesTrak)
+
+message GpsSatInfo {
+  uint32 prn  = 1;
+  sint32 elev = 2;
+  uint32 azim = 3;
+  uint32 snr  = 4;
+}
+
+message GpsTelemetry {
+  double lat            = 1;
+  double lon            = 2;
+  float  alt            = 3;
+  float  spd            = 4;
+  float  hdop           = 5;
+  bool   valid          = 6;
+  uint32 satellites     = 7;  // GGA tracked count (legacy)
+  float  pdop           = 8;
+  uint32 avg_cnr        = 9;
+  uint32 quality        = 10;
+  uint32 navmode        = 11;
+  float  heading        = 12; // RMC course over ground, degrees
+  uint32 sats_in_view   = 13; // GSV structured count
+  uint32 sats_used      = 14; // GSA used-PRN count
+  repeated uint32 used_prns = 15;
+  repeated GpsSatInfo sats  = 16;
+}
+
+message GpsConfig {
+  bool   post_unfixed = 1;
+  uint32 field_mask   = 2;  // APP_GPS_FIELD_* bits
+}

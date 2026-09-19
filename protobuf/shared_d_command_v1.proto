@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+
+
+import "shared_d_common_v1.proto";
+import "shared_d_config_v1.proto";
+
+enum CommandStatus {
+  CMD_UNSPECIFIED = 0;
+  CMD_ACCEPTED    = 1;   // long job queued (FOTA)
+  CMD_OK          = 2;
+  CMD_FAILED      = 3;
+  CMD_UNSUPPORTED = 4;
+  CMD_EXPIRED     = 5;
+  CMD_BUSY        = 6;
+}
+
+enum CommandType {
+  CMD_TYPE_UNSPECIFIED = 0;
+  CMD_ECHO       = 1;
+  CMD_REBOOT     = 2;
+  CMD_FOTA       = 3;
+  CMD_GET_CONFIG = 4;
+  CMD_ENGINE     = 5;  // EngineParams.on: true=engine on, false=engine off
+}
+
+message EchoParams {
+  string message = 1;
+}
+
+message RebootParams {
+  uint32 delay_ms = 1;
+}
+
+message FotaParams {
+  string package_url    = 1;
+  string target_version = 2;
+  bool   force          = 3;
+  bytes  sha256         = 4;  // exactly 32 bytes; required
+}
+
+// Which blocks to return. All false => return every known block.
+message GetConfigParams {
+  bool network   = 1;
+  bool sms       = 2;
+  bool gps       = 3;
+  bool logging   = 4;
+  bool vehicle   = 5;
+  bool telemetry = 6;
+}
+
+message EngineParams {
+  bool on = 1;  // true = engine on, false = engine off
+}
+
+// MQTT root for device/{id}/command
+message DeviceCommand {
+  CommandHeader header = 1;
+  CommandType   type   = 2;
+  // Serialized EchoParams | RebootParams | FotaParams | GetConfigParams | EngineParams
+  bytes         params = 3;
+  ProtoVersion proto_version = 100;
+}
+
+// MQTT root for ingest/telemetry/ack
+message CommandResponse {
+  CommandHeader header     = 1;
+  CommandStatus status     = 2;
+  uint32        error_code = 3;
+  string        message    = 4;
+  oneof result {
+    DeviceConfiguration config = 10;
+  }
+  ProtoVersion proto_version = 100;
+}

@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package device;
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+
+
+import "shared_d_common_v1.proto";
+import "d_gps_v1.proto";
+import "d_vehicle_v1.proto";
+import "shared_d_identity_v1.proto";
+
+// MQTT root for ingest/telemetry/state (no Envelope).
+message DeviceTelemetry {
+  ProtoVersion proto_version = 1;
+  optional DeviceIdentity identity = 2;
+  optional GpsTelemetry   gps      = 3;
+  optional VehicleStatus  vehicle  = 4;
+  uint32 timestamp = 5;
+  uint32 seq       = 6;
+}
+
+message TelemetryConfig {
+  // Ignored by firmware: DeviceTelemetry.identity is always sent.
+  // Kept for config wire compatibility (do not renumber).
+  bool include_identity = 1;
+  bool include_gps      = 2;  // default true
+  bool include_vehicle  = 3;  // default true
+}

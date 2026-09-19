@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+
+
+// Bump ProtoVersion when the on-wire contract for a root changes in a way
+// consumers must notice (removed/renumbered fields, Envelope removed, etc.).
+// Additive optional fields may keep the same version if backends are
+// forward-compatible. Firmware always sets the current value on encode.
+enum ProtoVersion {
+  PROTO_VERSION_UNSPECIFIED = 0;
+  PROTO_VERSION_1 = 1;  // DeviceTelemetry roots, no Envelope
+}
+
+message CommandHeader {
+  string command_id = 1;
+  uint32 created_at = 2;   // unix seconds
+  uint32 expire_at  = 3;   // unix seconds, 0 = never
+}

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+
+
+// Vehicle I/O. last_shock_at is sticky unix seconds (0 = never); notify when it
+// increases. Device always sets presence (nanopb OPTIONAL) so false/0 appear
+// on the wire whenever the vehicle block is included.
+message VehicleStatus {
+  optional bool   acc_active    = 1;  // ACC=1 active
+  optional bool   door_active   = 2;  // door signal active (active-low pin)
+  optional bool   shock_level   = 3;  // current shock pin level
+  optional bool   engine_on     = 4;
+  optional uint32 bat_mv        = 5;
+  optional uint32 last_shock_at = 6;
+  optional uint32 reported_at   = 7;  // unix sec of this sample; always set
+}
+
+message VehicleConfig {
+  uint32 post_period_ms = 1;  // state uplink interval when vehicle-driven (default 1000)
+  string name           = 2;  // human-readable label, e.g. "Truck-12"
+  // Ignored by firmware: all VehicleStatus fields are always sent.
+  // Kept for config wire compatibility (do not renumber).
+  uint32 field_mask     = 3;
+}

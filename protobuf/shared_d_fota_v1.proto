@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+
+
+import "shared_d_common_v1.proto";
+
+message FotaStatus {
+  enum State {
+    IDLE         = 0;
+    DOWNLOADING  = 1;
+    VERIFYING    = 2;
+    APPLYING     = 3;
+    SUCCESS      = 4;
+    FAILED       = 5;
+  }
+  State  state             = 1;
+  uint32 progress_percent  = 2;
+  string detail            = 3;
+  string current_version   = 4;
+  string target_version    = 5;
+  string command_id        = 6;
+  ProtoVersion proto_version = 100;
+}

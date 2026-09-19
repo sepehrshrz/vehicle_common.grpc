@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+
+
+import "shared_d_common_v1.proto";
+import "d_gps_v1.proto";
+import "d_vehicle_v1.proto";
+import "d_telemetry_v1.proto";
+
+message NetworkConfig {
+  string apn  = 1;
+  string user = 2;
+  string pass = 3;
+}
+
+message SmsRecipient {
+  string name   = 1;
+  string number = 2;  // E.164, e.g. "+989123456789"
+}
+
+message SmsNotificationConfig {
+  repeated SmsRecipient recipients = 1;  // max 5 (nanopb STATIC)
+  bool   enabled           = 2;  // master switch
+  bool   enable_shock      = 3;
+  bool   enable_acc_on     = 4;
+  bool   enable_acc_off    = 5;
+  bool   enable_door_open  = 6;
+  bool   enable_door_close = 7;
+  string msg_shock         = 8;
+  string msg_acc_on        = 9;
+  string msg_acc_off       = 10;
+  string msg_door_open     = 11;
+  string msg_door_close    = 12;
+}
+
+message LoggingConfig {
+  uint32 level = 1;
+}
+
+// Full/partial snapshot of current settings (read path).
+message DeviceConfiguration {
+  NetworkConfig         network   = 1;
+  SmsNotificationConfig sms       = 2;
+  GpsConfig             gps       = 3;
+  LoggingConfig         logging   = 4;
+  TelemetryConfig       telemetry = 5;
+  VehicleConfig         vehicle   = 6;
+}
+
+// Patch settings (write path). Same blocks; omit = leave unchanged.
+// MQTT root for device/{id}/config
+message DeviceConfigurationUpdate {
+  CommandHeader         header    = 1;
+  NetworkConfig         network   = 2;
+  SmsNotificationConfig sms       = 3;
+  GpsConfig             gps       = 4;
+  LoggingConfig         logging   = 5;
+  VehicleConfig         vehicle   = 6;
+  TelemetryConfig       telemetry = 7;
+  ProtoVersion proto_version = 100;
+}

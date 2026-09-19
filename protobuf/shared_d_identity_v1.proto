@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+
+
+import "shared_d_common_v1.proto";
+
+message DeviceIdentity {
+  string device_id  = 1;
+  string imei       = 2;
+  string serial     = 3;
+  string cpu_uid    = 4;
+  string model      = 5;
+  string fw_version = 6;
+  // Additive schema version for hello root (MQTT ingest/telemetry/hello).
+  ProtoVersion proto_version = 100;
+}
