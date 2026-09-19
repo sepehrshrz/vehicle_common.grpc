@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package device;
 
-option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/d_gps_v1;d_gps_v1";
 
 
 // Backend contract for GpsTelemetry:

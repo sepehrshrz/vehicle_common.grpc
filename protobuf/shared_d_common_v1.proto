@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package device;
 
-option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_common_v1;shared_d_common_v1";
 
 
 // Bump ProtoVersion when the on-wire contract for a root changes in a way

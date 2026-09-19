@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package metric_state_v1;
 
-option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/metric_state_v1;metric_state_v1";
 
 
 // Backend contract for GpsTelemetry:

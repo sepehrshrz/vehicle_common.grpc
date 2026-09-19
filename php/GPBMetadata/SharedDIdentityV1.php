@@ -17,7 +17,7 @@ class SharedDIdentityV1
         \GPBMetadata\SharedDCommonV1::initOnce();
         $pool->internalAddGeneratedFile(
             '
-•
+±
 shared_d_identity_v1.protodevice"¢
 DeviceIdentity
 	device_id (	
@@ -27,7 +27,7 @@ class SharedDIdentityV1
 model (	
 
 fw_version (	+
-proto_versiond (2.device.ProtoVersionBBZ@github.com/sepehrshrz/vehicle_common.grpc/genproto/device;devicebproto3'
+proto_versiond (2.device.ProtoVersionB^Z\\github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_identity_v1;shared_d_identity_v1bproto3'
         , true);
 
         static::$is_initialized = true;

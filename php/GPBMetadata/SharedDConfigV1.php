@@ -20,7 +20,7 @@ class SharedDConfigV1
         \GPBMetadata\DTelemetryV1::initOnce();
         $pool->internalAddGeneratedFile(
             '
-Ô	
+ì	
 shared_d_config_v1.protodeviced_gps_v1.protod_vehicle_v1.protod_telemetry_v1.proto"8
 NetworkConfig
 apn (	
@@ -62,7 +62,7 @@ msg_acc_on	 (	
 logging (2.device.LoggingConfig&
 vehicle (2.device.VehicleConfig*
 	telemetry (2.device.TelemetryConfig+
-proto_versiond (2.device.ProtoVersionBBZ@github.com/sepehrshrz/vehicle_common.grpc/genproto/device;devicebproto3'
+proto_versiond (2.device.ProtoVersionBZZXgithub.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_config_v1;shared_d_config_v1bproto3'
         , true);
 
         static::$is_initialized = true;
