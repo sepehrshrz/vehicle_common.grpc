@@ -15,13 +15,14 @@ class SharedDConfigV1
           return;
         }
         \GPBMetadata\SharedDCommonV1::initOnce();
-        \GPBMetadata\DGpsV1::initOnce();
-        \GPBMetadata\DVehicleV1::initOnce();
-        \GPBMetadata\DTelemetryV1::initOnce();
+        \GPBMetadata\SharedDGpsV1::initOnce();
+        \GPBMetadata\SharedDVehicleV1::initOnce();
+        \GPBMetadata\SharedDTelemetryV1::initOnce();
         $pool->internalAddGeneratedFile(
             '
-Ï	
-shared_d_config_v1.protodeviced_gps_v1.protod_vehicle_v1.protod_telemetry_v1.proto"8
+Å
+
+shared_d_config_v1.protodeviceshared_d_gps_v1.protoshared_d_vehicle_v1.protoshared_d_telemetry_v1.proto"8
 NetworkConfig
 apn (	
 user (	

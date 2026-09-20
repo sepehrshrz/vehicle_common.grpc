@@ -6,9 +6,9 @@ option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d
 
 
 import "shared_d_common_v1.proto";
-import "d_gps_v1.proto";
-import "d_vehicle_v1.proto";
-import "d_telemetry_v1.proto";
+import "shared_d_gps_v1.proto";
+import "shared_d_vehicle_v1.proto";
+import "shared_d_telemetry_v1.proto";
 
 message NetworkConfig {
   string apn  = 1;
