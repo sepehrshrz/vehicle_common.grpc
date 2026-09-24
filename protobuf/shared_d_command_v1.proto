@@ -4,9 +4,11 @@ package device;
 
 option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_command_v1;shared_d_command_v1";
 
-
 import "shared_d_common_v1.proto";
 import "shared_d_config_v1.proto";
+import "shared_d_gps_v1.proto";
+import "shared_d_vehicle_v1.proto";
+import "shared_d_telemetry_v1.proto";
 
 enum CommandStatus {
   CMD_UNSPECIFIED = 0;
@@ -25,6 +27,7 @@ enum CommandType {
   CMD_FOTA       = 3;
   CMD_GET_CONFIG = 4;
   CMD_ENGINE     = 5;  // EngineParams.on: true=engine on, false=engine off
+  CMD_SET_CONFIG = 6;  // SetConfigParams: patch blocks; omit = unchanged
 }
 
 message EchoParams {
@@ -56,11 +59,23 @@ message EngineParams {
   bool on = 1;  // true = engine on, false = engine off
 }
 
+// Patch settings via command. Same blocks as DeviceConfigurationUpdate (omit = unchanged).
+// Field numbers are Update blocks 2–7 renumbered to 1–6 (no header / proto_version here).
+message SetConfigParams {
+  NetworkConfig         network   = 1;
+  SmsNotificationConfig sms       = 2;
+  GpsConfig             gps       = 3;
+  LoggingConfig         logging   = 4;
+  VehicleConfig         vehicle   = 5;
+  TelemetryConfig       telemetry = 6;
+}
+
 // MQTT root for device/{id}/command
 message DeviceCommand {
   CommandHeader header = 1;
   CommandType   type   = 2;
-  // Serialized EchoParams | RebootParams | FotaParams | GetConfigParams | EngineParams
+  // Serialized EchoParams | RebootParams | FotaParams | GetConfigParams |
+  // EngineParams | SetConfigParams
   bytes         params = 3;
   ProtoVersion proto_version = 100;
 }

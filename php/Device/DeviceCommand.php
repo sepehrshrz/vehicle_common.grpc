@@ -24,7 +24,8 @@ class DeviceCommand extends \Google\Protobuf\Internal\Message
      */
     protected $type = 0;
     /**
-     * Serialized EchoParams | RebootParams | FotaParams | GetConfigParams | EngineParams
+     * Serialized EchoParams | RebootParams | FotaParams | GetConfigParams |
+     * EngineParams | SetConfigParams
      *
      * Generated from protobuf field <code>bytes params = 3;</code>
      */
@@ -43,7 +44,8 @@ class DeviceCommand extends \Google\Protobuf\Internal\Message
      *     @type \Device\CommandHeader $header
      *     @type int $type
      *     @type string $params
-     *           Serialized EchoParams | RebootParams | FotaParams | GetConfigParams | EngineParams
+     *           Serialized EchoParams | RebootParams | FotaParams | GetConfigParams |
+     *           EngineParams | SetConfigParams
      *     @type int $proto_version
      * }
      */
@@ -107,7 +109,8 @@ class DeviceCommand extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Serialized EchoParams | RebootParams | FotaParams | GetConfigParams | EngineParams
+     * Serialized EchoParams | RebootParams | FotaParams | GetConfigParams |
+     * EngineParams | SetConfigParams
      *
      * Generated from protobuf field <code>bytes params = 3;</code>
      * @return string
@@ -118,7 +121,8 @@ class DeviceCommand extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Serialized EchoParams | RebootParams | FotaParams | GetConfigParams | EngineParams
+     * Serialized EchoParams | RebootParams | FotaParams | GetConfigParams |
+     * EngineParams | SetConfigParams
      *
      * Generated from protobuf field <code>bytes params = 3;</code>
      * @param string $var
