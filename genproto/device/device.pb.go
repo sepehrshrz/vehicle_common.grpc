@@ -67,7 +67,7 @@ func (x *GetDeviceByIMEIReq) GetDeviceImei() string {
 
 type GetDeviceByIMEIRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Imei          string                 `protobuf:"bytes,2,opt,name=imei,proto3" json:"imei,omitempty"`
 	Mac           string                 `protobuf:"bytes,3,opt,name=mac,proto3" json:"mac,omitempty"`
 	SimNum        string                 `protobuf:"bytes,4,opt,name=sim_num,json=simNum,proto3" json:"sim_num,omitempty"`
@@ -112,11 +112,11 @@ func (*GetDeviceByIMEIRes) Descriptor() ([]byte, []int) {
 	return file_device_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetDeviceByIMEIRes) GetId() int64 {
+func (x *GetDeviceByIMEIRes) GetId() string {
 	if x != nil {
 		return x.Id
 	}
-	return 0
+	return ""
 }
 
 func (x *GetDeviceByIMEIRes) GetImei() string {
@@ -358,7 +358,7 @@ const file_device_proto_rawDesc = "" +
 	"\vdevice_imei\x18\x01 \x01(\tR\n" +
 	"deviceImei\"\xc2\x02\n" +
 	"\x12GetDeviceByIMEIRes\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04imei\x18\x02 \x01(\tR\x04imei\x12\x10\n" +
 	"\x03mac\x18\x03 \x01(\tR\x03mac\x12\x17\n" +
 	"\asim_num\x18\x04 \x01(\tR\x06simNum\x12\x18\n" +
