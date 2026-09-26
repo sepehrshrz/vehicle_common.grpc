@@ -16,7 +16,7 @@ message GetDeviceByIMEIReq {
 }
 
 message GetDeviceByIMEIRes {
-  string id = 1;
+  int64 id = 1;
   string imei = 2;
   string mac  = 3;
   string sim_num  = 4;
@@ -35,7 +35,7 @@ message GetCommandByIDReq {
 }
 
 message GetCommandByIDRes {
-  int64 id = 1;
+  string id = 1;
   int64 command_type = 2;
   int64 status  = 3;
   int64 device_id  = 4;
