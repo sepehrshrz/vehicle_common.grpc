@@ -189,6 +189,166 @@ func (x *GetDeviceByIMEIRes) GetUpdatedAt() string {
 	return ""
 }
 
+type GetCommandByIDReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CommandId     string                 `protobuf:"bytes,1,opt,name=command_id,json=commandId,proto3" json:"command_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCommandByIDReq) Reset() {
+	*x = GetCommandByIDReq{}
+	mi := &file_device_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCommandByIDReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCommandByIDReq) ProtoMessage() {}
+
+func (x *GetCommandByIDReq) ProtoReflect() protoreflect.Message {
+	mi := &file_device_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCommandByIDReq.ProtoReflect.Descriptor instead.
+func (*GetCommandByIDReq) Descriptor() ([]byte, []int) {
+	return file_device_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetCommandByIDReq) GetCommandId() string {
+	if x != nil {
+		return x.CommandId
+	}
+	return ""
+}
+
+type GetCommandByIDRes struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Id                int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	CommandType       int64                  `protobuf:"varint,2,opt,name=command_type,json=commandType,proto3" json:"command_type,omitempty"`
+	Status            int64                  `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`
+	DeviceId          int64                  `protobuf:"varint,4,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	VehicleId         int64                  `protobuf:"varint,5,opt,name=vehicle_id,json=vehicleId,proto3" json:"vehicle_id,omitempty"`
+	Payload           string                 `protobuf:"bytes,6,opt,name=payload,proto3" json:"payload,omitempty"`
+	FailedDescription string                 `protobuf:"bytes,7,opt,name=failed_description,json=failedDescription,proto3" json:"failed_description,omitempty"`
+	ExpireAt          string                 `protobuf:"bytes,8,opt,name=expire_at,json=expireAt,proto3" json:"expire_at,omitempty"`
+	CreatedAt         string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt         string                 `protobuf:"bytes,10,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *GetCommandByIDRes) Reset() {
+	*x = GetCommandByIDRes{}
+	mi := &file_device_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCommandByIDRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCommandByIDRes) ProtoMessage() {}
+
+func (x *GetCommandByIDRes) ProtoReflect() protoreflect.Message {
+	mi := &file_device_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCommandByIDRes.ProtoReflect.Descriptor instead.
+func (*GetCommandByIDRes) Descriptor() ([]byte, []int) {
+	return file_device_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetCommandByIDRes) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *GetCommandByIDRes) GetCommandType() int64 {
+	if x != nil {
+		return x.CommandType
+	}
+	return 0
+}
+
+func (x *GetCommandByIDRes) GetStatus() int64 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *GetCommandByIDRes) GetDeviceId() int64 {
+	if x != nil {
+		return x.DeviceId
+	}
+	return 0
+}
+
+func (x *GetCommandByIDRes) GetVehicleId() int64 {
+	if x != nil {
+		return x.VehicleId
+	}
+	return 0
+}
+
+func (x *GetCommandByIDRes) GetPayload() string {
+	if x != nil {
+		return x.Payload
+	}
+	return ""
+}
+
+func (x *GetCommandByIDRes) GetFailedDescription() string {
+	if x != nil {
+		return x.FailedDescription
+	}
+	return ""
+}
+
+func (x *GetCommandByIDRes) GetExpireAt() string {
+	if x != nil {
+		return x.ExpireAt
+	}
+	return ""
+}
+
+func (x *GetCommandByIDRes) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *GetCommandByIDRes) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
 var File_device_proto protoreflect.FileDescriptor
 
 const file_device_proto_rawDesc = "" +
@@ -212,9 +372,28 @@ const file_device_proto_rawDesc = "" +
 	"created_at\x18\n" +
 	" \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\v \x01(\tR\tupdatedAt2Y\n" +
+	"updated_at\x18\v \x01(\tR\tupdatedAt\"2\n" +
+	"\x11GetCommandByIDReq\x12\x1d\n" +
+	"\n" +
+	"command_id\x18\x01 \x01(\tR\tcommandId\"\xbe\x02\n" +
+	"\x11GetCommandByIDRes\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12!\n" +
+	"\fcommand_type\x18\x02 \x01(\x03R\vcommandType\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\x03R\x06status\x12\x1b\n" +
+	"\tdevice_id\x18\x04 \x01(\x03R\bdeviceId\x12\x1d\n" +
+	"\n" +
+	"vehicle_id\x18\x05 \x01(\x03R\tvehicleId\x12\x18\n" +
+	"\apayload\x18\x06 \x01(\tR\apayload\x12-\n" +
+	"\x12failed_description\x18\a \x01(\tR\x11failedDescription\x12\x1b\n" +
+	"\texpire_at\x18\b \x01(\tR\bexpireAt\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\t \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\n" +
+	" \x01(\tR\tupdatedAt2\xa0\x01\n" +
 	"\rDeviceService\x12H\n" +
-	"\fDeviceByIMEI\x12\x1a.device.GetDeviceByIMEIReq\x1a\x1a.device.GetDeviceByIMEIRes\"\x00BBZ@github.com/sepehrshrz/vehicle_common.grpc/genproto/device;deviceb\x06proto3"
+	"\fDeviceByIMEI\x12\x1a.device.GetDeviceByIMEIReq\x1a\x1a.device.GetDeviceByIMEIRes\"\x00\x12E\n" +
+	"\vCommandByID\x12\x19.device.GetCommandByIDReq\x1a\x19.device.GetCommandByIDRes\"\x00BBZ@github.com/sepehrshrz/vehicle_common.grpc/genproto/device;deviceb\x06proto3"
 
 var (
 	file_device_proto_rawDescOnce sync.Once
@@ -228,16 +407,20 @@ func file_device_proto_rawDescGZIP() []byte {
 	return file_device_proto_rawDescData
 }
 
-var file_device_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_device_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_device_proto_goTypes = []any{
 	(*GetDeviceByIMEIReq)(nil), // 0: device.GetDeviceByIMEIReq
 	(*GetDeviceByIMEIRes)(nil), // 1: device.GetDeviceByIMEIRes
+	(*GetCommandByIDReq)(nil),  // 2: device.GetCommandByIDReq
+	(*GetCommandByIDRes)(nil),  // 3: device.GetCommandByIDRes
 }
 var file_device_proto_depIdxs = []int32{
 	0, // 0: device.DeviceService.DeviceByIMEI:input_type -> device.GetDeviceByIMEIReq
-	1, // 1: device.DeviceService.DeviceByIMEI:output_type -> device.GetDeviceByIMEIRes
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	2, // 1: device.DeviceService.CommandByID:input_type -> device.GetCommandByIDReq
+	1, // 2: device.DeviceService.DeviceByIMEI:output_type -> device.GetDeviceByIMEIRes
+	3, // 3: device.DeviceService.CommandByID:output_type -> device.GetCommandByIDRes
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -254,7 +437,7 @@ func file_device_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_device_proto_rawDesc), len(file_device_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

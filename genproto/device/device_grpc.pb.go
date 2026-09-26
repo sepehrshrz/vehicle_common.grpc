@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	DeviceService_DeviceByIMEI_FullMethodName = "/device.DeviceService/DeviceByIMEI"
+	DeviceService_CommandByID_FullMethodName  = "/device.DeviceService/CommandByID"
 )
 
 // DeviceServiceClient is the client API for DeviceService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DeviceServiceClient interface {
 	DeviceByIMEI(ctx context.Context, in *GetDeviceByIMEIReq, opts ...grpc.CallOption) (*GetDeviceByIMEIRes, error)
+	CommandByID(ctx context.Context, in *GetCommandByIDReq, opts ...grpc.CallOption) (*GetCommandByIDRes, error)
 }
 
 type deviceServiceClient struct {
@@ -47,11 +49,22 @@ func (c *deviceServiceClient) DeviceByIMEI(ctx context.Context, in *GetDeviceByI
 	return out, nil
 }
 
+func (c *deviceServiceClient) CommandByID(ctx context.Context, in *GetCommandByIDReq, opts ...grpc.CallOption) (*GetCommandByIDRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCommandByIDRes)
+	err := c.cc.Invoke(ctx, DeviceService_CommandByID_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeviceServiceServer is the server API for DeviceService service.
 // All implementations should embed UnimplementedDeviceServiceServer
 // for forward compatibility.
 type DeviceServiceServer interface {
 	DeviceByIMEI(context.Context, *GetDeviceByIMEIReq) (*GetDeviceByIMEIRes, error)
+	CommandByID(context.Context, *GetCommandByIDReq) (*GetCommandByIDRes, error)
 }
 
 // UnimplementedDeviceServiceServer should be embedded to have
@@ -63,6 +76,9 @@ type UnimplementedDeviceServiceServer struct{}
 
 func (UnimplementedDeviceServiceServer) DeviceByIMEI(context.Context, *GetDeviceByIMEIReq) (*GetDeviceByIMEIRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeviceByIMEI not implemented")
+}
+func (UnimplementedDeviceServiceServer) CommandByID(context.Context, *GetCommandByIDReq) (*GetCommandByIDRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CommandByID not implemented")
 }
 func (UnimplementedDeviceServiceServer) testEmbeddedByValue() {}
 
@@ -102,6 +118,24 @@ func _DeviceService_DeviceByIMEI_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeviceService_CommandByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCommandByIDReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServiceServer).CommandByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceService_CommandByID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServiceServer).CommandByID(ctx, req.(*GetCommandByIDReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DeviceService_ServiceDesc is the grpc.ServiceDesc for DeviceService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -112,6 +146,10 @@ var DeviceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeviceByIMEI",
 			Handler:    _DeviceService_DeviceByIMEI_Handler,
+		},
+		{
+			MethodName: "CommandByID",
+			Handler:    _DeviceService_CommandByID_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

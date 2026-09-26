@@ -7,6 +7,7 @@ option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;d
 
 service DeviceService {
   rpc DeviceByIMEI (GetDeviceByIMEIReq) returns (GetDeviceByIMEIRes) {}
+  rpc CommandByID (GetCommandByIDReq) returns (GetCommandByIDRes) {}
 }
 
 
@@ -26,4 +27,22 @@ message GetDeviceByIMEIRes {
   string activated_at= 9;
   string created_at= 10;
   string updated_at= 11;
+}
+
+
+message GetCommandByIDReq {
+  string command_id = 1;
+}
+
+message GetCommandByIDRes {
+  int64 id = 1;
+  int64 command_type = 2;
+  int64 status  = 3;
+  int64 device_id  = 4;
+  int64 vehicle_id  = 5;
+  string payload = 6;
+  string failed_description  = 7;
+  string expire_at= 8;
+  string created_at= 9;
+  string updated_at= 10;
 }
