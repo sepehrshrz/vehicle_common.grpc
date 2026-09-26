@@ -390,10 +390,10 @@ const file_device_proto_rawDesc = "" +
 	"created_at\x18\t \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
 	"updated_at\x18\n" +
-	" \x01(\tR\tupdatedAt2\xa1\x01\n" +
+	" \x01(\tR\tupdatedAt2\xa0\x01\n" +
 	"\rDeviceService\x12H\n" +
-	"\fDeviceByIMEI\x12\x1a.device.GetDeviceByIMEIReq\x1a\x1a.device.GetDeviceByIMEIRes\"\x00\x12F\n" +
-	"\vCommandByID\x12\x19.device.GetCommandByIDReq\x1a\x1a.device.GetDeviceByIMEIRes\"\x00BBZ@github.com/sepehrshrz/vehicle_common.grpc/genproto/device;deviceb\x06proto3"
+	"\fDeviceByIMEI\x12\x1a.device.GetDeviceByIMEIReq\x1a\x1a.device.GetDeviceByIMEIRes\"\x00\x12E\n" +
+	"\vCommandByID\x12\x19.device.GetCommandByIDReq\x1a\x19.device.GetCommandByIDRes\"\x00BBZ@github.com/sepehrshrz/vehicle_common.grpc/genproto/device;deviceb\x06proto3"
 
 var (
 	file_device_proto_rawDescOnce sync.Once
@@ -418,7 +418,7 @@ var file_device_proto_depIdxs = []int32{
 	0, // 0: device.DeviceService.DeviceByIMEI:input_type -> device.GetDeviceByIMEIReq
 	2, // 1: device.DeviceService.CommandByID:input_type -> device.GetCommandByIDReq
 	1, // 2: device.DeviceService.DeviceByIMEI:output_type -> device.GetDeviceByIMEIRes
-	1, // 3: device.DeviceService.CommandByID:output_type -> device.GetDeviceByIMEIRes
+	3, // 3: device.DeviceService.CommandByID:output_type -> device.GetCommandByIDRes
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

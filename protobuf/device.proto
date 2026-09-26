@@ -7,7 +7,7 @@ option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;d
 
 service DeviceService {
   rpc DeviceByIMEI (GetDeviceByIMEIReq) returns (GetDeviceByIMEIRes) {}
-  rpc CommandByID (GetCommandByIDReq) returns (GetDeviceByIMEIRes) {}
+  rpc CommandByID (GetCommandByIDReq) returns (GetCommandByIDRes) {}
 }
 
 

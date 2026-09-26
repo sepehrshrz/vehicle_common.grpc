@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package shared_common_const;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_common_const;shared_common_const";
+
+enum ForceStopStatus {
+  FORCE_STOP_STATUS_UNSPECIFIED = 0;
+  FORCE_STOP_STATUS_DE_ACTIVE = 1;
+  FORCE_STOP_STATUS_ACTIVE = 2;
+  FORCE_STOP_STATUS_PENDING = 3;
+  FORCE_STOP_STATUS_IN_PROGRESS = 4;
+}
+
+enum CommandStatus {
+  COMMAND_STATUS_UNSPECIFIED = 0;
+  COMMAND_STATUS_PENDING = 1;
+  COMMAND_STATUS_IN_PROGRESS = 5;
+  COMMAND_STATUS_DOWN = 6;
+  COMMAND_STATUS_FAILED = 7;
+}
