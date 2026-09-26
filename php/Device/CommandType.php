@@ -37,6 +37,12 @@ class CommandType
      * Generated from protobuf enum <code>CMD_ENGINE = 5;</code>
      */
     const CMD_ENGINE = 5;
+    /**
+     * SetConfigParams: patch blocks; omit = unchanged
+     *
+     * Generated from protobuf enum <code>CMD_SET_CONFIG = 6;</code>
+     */
+    const CMD_SET_CONFIG = 6;
 
     private static $valueToName = [
         self::CMD_TYPE_UNSPECIFIED => 'CMD_TYPE_UNSPECIFIED',
@@ -45,6 +51,7 @@ class CommandType
         self::CMD_FOTA => 'CMD_FOTA',
         self::CMD_GET_CONFIG => 'CMD_GET_CONFIG',
         self::CMD_ENGINE => 'CMD_ENGINE',
+        self::CMD_SET_CONFIG => 'CMD_SET_CONFIG',
     ];
 
     public static function name($value)

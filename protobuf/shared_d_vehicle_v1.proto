@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package device;
 
-option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/d_vehicle_v1;d_vehicle_v1";
 
 
 // Vehicle I/O. last_shock_at is sticky unix seconds (0 = never); notify when it

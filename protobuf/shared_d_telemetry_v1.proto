@@ -1,12 +1,12 @@
 syntax = "proto3";
 
 package device;
-option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/device;device";
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/d_telemetry_v1;d_telemetry_v1";
 
 
 import "shared_d_common_v1.proto";
-import "d_gps_v1.proto";
-import "d_vehicle_v1.proto";
+import "shared_d_gps_v1.proto";
+import "shared_d_vehicle_v1.proto";
 import "shared_d_identity_v1.proto";
 
 // MQTT root for ingest/telemetry/state (no Envelope).
