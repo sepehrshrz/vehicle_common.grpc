@@ -38,6 +38,9 @@ message GpsTelemetry {
   uint32 sats_used      = 14; // GSA used-PRN count
   repeated uint32 used_prns = 15;
   repeated GpsSatInfo sats  = 16;
+  // Jam / recover diagnostics (LC76G $PAIRSPF + auto/manual recover)
+  uint32 jam_status     = 17; // 0 unknown, 1 good, 2 warning, 3 critical
+  uint32 recover_count  = 18; // cold/hw recover actions since boot
 }
 
 message GpsConfig {

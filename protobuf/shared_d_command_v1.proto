@@ -28,6 +28,7 @@ enum CommandType {
   CMD_GET_CONFIG = 4;
   CMD_ENGINE     = 5;  // EngineParams.on: true=engine on, false=engine off
   CMD_SET_CONFIG = 6;  // SetConfigParams: patch blocks; omit = unchanged
+  CMD_GPS_RECOVER = 7; // GpsRecoverParams: cold start / HW reset / full cold
 }
 
 message EchoParams {
@@ -59,6 +60,17 @@ message EngineParams {
   bool on = 1;  // true = engine on, false = engine off
 }
 
+enum GpsRecoverAction {
+  GPS_RECOVER_UNSPECIFIED = 0;
+  GPS_RECOVER_COLD_START  = 1;  // $PAIR006
+  GPS_RECOVER_HW_RESET    = 2;  // RESET_N pulse
+  GPS_RECOVER_FULL_COLD   = 3;  // $PAIR007 — clears config; rare
+}
+
+message GpsRecoverParams {
+  GpsRecoverAction action = 1;
+}
+
 // Patch settings via command. Same blocks as DeviceConfigurationUpdate (omit = unchanged).
 // Field numbers are Update blocks 2–7 renumbered to 1–6 (no header / proto_version here).
 message SetConfigParams {
@@ -75,19 +87,34 @@ message DeviceCommand {
   CommandHeader header = 1;
   CommandType   type   = 2;
   // Serialized EchoParams | RebootParams | FotaParams | GetConfigParams |
-  // EngineParams | SetConfigParams
+  // EngineParams | SetConfigParams | GpsRecoverParams
   bytes         params = 3;
   ProtoVersion proto_version = 100;
 }
 
 // MQTT root for ingest/telemetry/ack
+message FotaAckState {
+  // Running (or about-to-run) firmware identity string, same shape as DeviceIdentity.fw_version.
+  string fw_version = 1;
+}
+
+// Per-command snapshot carried in CommandResponse.previous / .applied.
+message CommandState {
+  optional DeviceConfiguration config = 1;  // SET_CONFIG / GET_CONFIG
+  optional EngineParams        engine = 2;  // CMD_ENGINE
+  optional string              echo   = 3;  // CMD_ECHO
+  optional FotaAckState        fota   = 4;  // CMD_FOTA
+}
+
 message CommandResponse {
   CommandHeader header     = 1;
   CommandStatus status     = 2;
   uint32        error_code = 3;
   string        message    = 4;
   oneof result {
-    DeviceConfiguration config = 10;
+    DeviceConfiguration config = 10;  // GET_CONFIG (kept for compatibility)
   }
+  optional CommandState previous = 11;
+  optional CommandState applied  = 12;
   ProtoVersion proto_version = 100;
 }

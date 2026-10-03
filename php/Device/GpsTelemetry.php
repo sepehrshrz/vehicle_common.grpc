@@ -85,6 +85,18 @@ class GpsTelemetry extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>repeated .device.GpsSatInfo sats = 16;</code>
      */
     private $sats;
+    /**
+     * Jam / recover diagnostics (LC76G $PAIRSPF + auto/manual recover)
+     *
+     * Generated from protobuf field <code>uint32 jam_status = 17;</code>
+     */
+    protected $jam_status = 0;
+    /**
+     * cold/hw recover actions since boot
+     *
+     * Generated from protobuf field <code>uint32 recover_count = 18;</code>
+     */
+    protected $recover_count = 0;
 
     /**
      * Constructor.
@@ -112,6 +124,10 @@ class GpsTelemetry extends \Google\Protobuf\Internal\Message
      *           GSA used-PRN count
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $used_prns
      *     @type array<\Device\GpsSatInfo>|\Google\Protobuf\Internal\RepeatedField $sats
+     *     @type int $jam_status
+     *           Jam / recover diagnostics (LC76G $PAIRSPF + auto/manual recover)
+     *     @type int $recover_count
+     *           cold/hw recover actions since boot
      * }
      */
     public function __construct($data = NULL) {
@@ -483,6 +499,58 @@ class GpsTelemetry extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Device\GpsSatInfo::class);
         $this->sats = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Jam / recover diagnostics (LC76G $PAIRSPF + auto/manual recover)
+     *
+     * Generated from protobuf field <code>uint32 jam_status = 17;</code>
+     * @return int
+     */
+    public function getJamStatus()
+    {
+        return $this->jam_status;
+    }
+
+    /**
+     * Jam / recover diagnostics (LC76G $PAIRSPF + auto/manual recover)
+     *
+     * Generated from protobuf field <code>uint32 jam_status = 17;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setJamStatus($var)
+    {
+        GPBUtil::checkUint32($var);
+        $this->jam_status = $var;
+
+        return $this;
+    }
+
+    /**
+     * cold/hw recover actions since boot
+     *
+     * Generated from protobuf field <code>uint32 recover_count = 18;</code>
+     * @return int
+     */
+    public function getRecoverCount()
+    {
+        return $this->recover_count;
+    }
+
+    /**
+     * cold/hw recover actions since boot
+     *
+     * Generated from protobuf field <code>uint32 recover_count = 18;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setRecoverCount($var)
+    {
+        GPBUtil::checkUint32($var);
+        $this->recover_count = $var;
 
         return $this;
     }

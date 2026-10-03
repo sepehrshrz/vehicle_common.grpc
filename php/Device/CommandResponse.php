@@ -9,8 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * MQTT root for ingest/telemetry/ack
- *
  * Generated from protobuf message <code>device.CommandResponse</code>
  */
 class CommandResponse extends \Google\Protobuf\Internal\Message
@@ -32,6 +30,14 @@ class CommandResponse extends \Google\Protobuf\Internal\Message
      */
     protected $message = '';
     /**
+     * Generated from protobuf field <code>optional .device.CommandState previous = 11;</code>
+     */
+    protected $previous = null;
+    /**
+     * Generated from protobuf field <code>optional .device.CommandState applied = 12;</code>
+     */
+    protected $applied = null;
+    /**
      * Generated from protobuf field <code>.device.ProtoVersion proto_version = 100;</code>
      */
     protected $proto_version = 0;
@@ -48,6 +54,9 @@ class CommandResponse extends \Google\Protobuf\Internal\Message
      *     @type int $error_code
      *     @type string $message
      *     @type \Device\DeviceConfiguration $config
+     *           GET_CONFIG (kept for compatibility)
+     *     @type \Device\CommandState $previous
+     *     @type \Device\CommandState $applied
      *     @type int $proto_version
      * }
      */
@@ -155,6 +164,8 @@ class CommandResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     * GET_CONFIG (kept for compatibility)
+     *
      * Generated from protobuf field <code>.device.DeviceConfiguration config = 10;</code>
      * @return \Device\DeviceConfiguration|null
      */
@@ -169,6 +180,8 @@ class CommandResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     * GET_CONFIG (kept for compatibility)
+     *
      * Generated from protobuf field <code>.device.DeviceConfiguration config = 10;</code>
      * @param \Device\DeviceConfiguration $var
      * @return $this
@@ -177,6 +190,70 @@ class CommandResponse extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Device\DeviceConfiguration::class);
         $this->writeOneof(10, $var);
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .device.CommandState previous = 11;</code>
+     * @return \Device\CommandState|null
+     */
+    public function getPrevious()
+    {
+        return $this->previous;
+    }
+
+    public function hasPrevious()
+    {
+        return isset($this->previous);
+    }
+
+    public function clearPrevious()
+    {
+        unset($this->previous);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .device.CommandState previous = 11;</code>
+     * @param \Device\CommandState $var
+     * @return $this
+     */
+    public function setPrevious($var)
+    {
+        GPBUtil::checkMessage($var, \Device\CommandState::class);
+        $this->previous = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .device.CommandState applied = 12;</code>
+     * @return \Device\CommandState|null
+     */
+    public function getApplied()
+    {
+        return $this->applied;
+    }
+
+    public function hasApplied()
+    {
+        return isset($this->applied);
+    }
+
+    public function clearApplied()
+    {
+        unset($this->applied);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .device.CommandState applied = 12;</code>
+     * @param \Device\CommandState $var
+     * @return $this
+     */
+    public function setApplied($var)
+    {
+        GPBUtil::checkMessage($var, \Device\CommandState::class);
+        $this->applied = $var;
 
         return $this;
     }

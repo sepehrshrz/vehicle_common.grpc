@@ -16,14 +16,14 @@ class SharedDGpsV1
         }
         $pool->internalAddGeneratedFile(
             '
-ê
+ª
 shared_d_gps_v1.protodevice"B
 
 GpsSatInfo
 prn (
 elev (
 azim (
-snr ("£
+snr ("Œ
 GpsTelemetry
 lat (
 lon (
@@ -42,7 +42,10 @@ satellites (
 sats_in_view (
 	sats_used (
 	used_prns ( 
-sats (2.device.GpsSatInfo"5
+sats (2.device.GpsSatInfo
+
+jam_status (
+recover_count ("5
 	GpsConfig
 post_unfixed (
 

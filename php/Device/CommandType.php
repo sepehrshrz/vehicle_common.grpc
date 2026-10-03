@@ -43,6 +43,12 @@ class CommandType
      * Generated from protobuf enum <code>CMD_SET_CONFIG = 6;</code>
      */
     const CMD_SET_CONFIG = 6;
+    /**
+     * GpsRecoverParams: cold start / HW reset / full cold
+     *
+     * Generated from protobuf enum <code>CMD_GPS_RECOVER = 7;</code>
+     */
+    const CMD_GPS_RECOVER = 7;
 
     private static $valueToName = [
         self::CMD_TYPE_UNSPECIFIED => 'CMD_TYPE_UNSPECIFIED',
@@ -52,6 +58,7 @@ class CommandType
         self::CMD_GET_CONFIG => 'CMD_GET_CONFIG',
         self::CMD_ENGINE => 'CMD_ENGINE',
         self::CMD_SET_CONFIG => 'CMD_SET_CONFIG',
+        self::CMD_GPS_RECOVER => 'CMD_GPS_RECOVER',
     ];
 
     public static function name($value)
