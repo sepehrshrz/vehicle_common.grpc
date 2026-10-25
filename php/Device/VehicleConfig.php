@@ -32,6 +32,12 @@ class VehicleConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>uint32 field_mask = 3;</code>
      */
     protected $field_mask = 0;
+    /**
+     * ACC-off delayed sleep (modem autosleep). 0 = disabled. Omit on SET_CONFIG = unchanged.
+     *
+     * Generated from protobuf field <code>optional uint32 sleep_after_acc_off_s = 4;</code>
+     */
+    protected $sleep_after_acc_off_s = null;
 
     /**
      * Constructor.
@@ -46,6 +52,8 @@ class VehicleConfig extends \Google\Protobuf\Internal\Message
      *     @type int $field_mask
      *           Ignored by firmware: all VehicleStatus fields are always sent.
      *           Kept for config wire compatibility (do not renumber).
+     *     @type int $sleep_after_acc_off_s
+     *           ACC-off delayed sleep (modem autosleep). 0 = disabled. Omit on SET_CONFIG = unchanged.
      * }
      */
     public function __construct($data = NULL) {
@@ -129,6 +137,42 @@ class VehicleConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkUint32($var);
         $this->field_mask = $var;
+
+        return $this;
+    }
+
+    /**
+     * ACC-off delayed sleep (modem autosleep). 0 = disabled. Omit on SET_CONFIG = unchanged.
+     *
+     * Generated from protobuf field <code>optional uint32 sleep_after_acc_off_s = 4;</code>
+     * @return int
+     */
+    public function getSleepAfterAccOffS()
+    {
+        return isset($this->sleep_after_acc_off_s) ? $this->sleep_after_acc_off_s : 0;
+    }
+
+    public function hasSleepAfterAccOffS()
+    {
+        return isset($this->sleep_after_acc_off_s);
+    }
+
+    public function clearSleepAfterAccOffS()
+    {
+        unset($this->sleep_after_acc_off_s);
+    }
+
+    /**
+     * ACC-off delayed sleep (modem autosleep). 0 = disabled. Omit on SET_CONFIG = unchanged.
+     *
+     * Generated from protobuf field <code>optional uint32 sleep_after_acc_off_s = 4;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setSleepAfterAccOffS($var)
+    {
+        GPBUtil::checkUint32($var);
+        $this->sleep_after_acc_off_s = $var;
 
         return $this;
     }

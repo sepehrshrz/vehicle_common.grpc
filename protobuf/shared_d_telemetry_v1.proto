@@ -1,13 +1,31 @@
 syntax = "proto3";
 
 package device;
-option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/d_telemetry_v1;d_telemetry_v1";
 
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/d_telemetry_v1;d_telemetry_v1";
 
 import "shared_d_common_v1.proto";
 import "shared_d_gps_v1.proto";
 import "shared_d_vehicle_v1.proto";
 import "shared_d_identity_v1.proto";
+import "shared_d_radio_v1.proto";
+
+// Last USSD balance query result(s) for the matched operator.
+message UssdBalanceResult {
+  string operator_name = 1;
+  string mcc = 2;
+  string mnc = 3;
+  string query_name = 4;
+  string code = 5;
+  string raw_text = 6;
+  string extracted = 7;  // empty if no extract hint / no match
+  uint32 queried_at = 8;
+  int32  err = 9;
+}
+
+message UssdBalanceStatus {
+  repeated UssdBalanceResult results = 1;  // last cycle, max 3
+}
 
 // MQTT root for ingest/telemetry/state (no Envelope).
 message DeviceTelemetry {
@@ -17,6 +35,9 @@ message DeviceTelemetry {
   optional VehicleStatus  vehicle  = 4;
   uint32 timestamp = 5;
   uint32 seq       = 6;
+  optional RadioStatus    radio    = 7;  // always filled by firmware
+  optional UssdBalanceStatus ussd_codes = 8;
+  optional string trip_id = 9;  // set while ACC trip active; omit when idle
 }
 
 message TelemetryConfig {

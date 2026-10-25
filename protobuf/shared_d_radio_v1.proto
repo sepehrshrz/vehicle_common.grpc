@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_radio_v1;shared_d_radio_v1";
+
+// Cellular / net_service diagnostics for DeviceTelemetry.radio.
+// Serving cell only (no neighbor list).
+
+enum NetState {
+  NET_STATE_UNSPECIFIED = 0;
+  NET_STATE_DOWN = 1;
+  NET_STATE_WAIT_REG = 2;
+  NET_STATE_PDP_CONNECTING = 3;
+  NET_STATE_PDP_UP = 4;
+  NET_STATE_VERIFYING = 5;
+  NET_STATE_ONLINE = 6;
+  NET_STATE_DEGRADED = 7;
+  NET_STATE_RECOVERING = 8;
+  NET_STATE_OFFLINE = 9;
+}
+
+enum RadioRat {
+  RADIO_RAT_UNKNOWN = 0;
+  RADIO_RAT_GSM_2G = 1;
+  RADIO_RAT_LTE_4G = 2;
+}
+
+message RadioStatus {
+  // App / link state
+  NetState net_state = 1;
+  bool sim_present = 2;
+  bool registered = 3;
+  bool pdp_active = 4;
+  bool ping_ok = 5;
+  bool dns_ok = 6;
+  string local_ip = 7;  // max 15 + NUL
+
+  // Recover / restart counters (since boot)
+  uint32 recover_count = 8;
+  uint32 pdp_up_count = 9;
+  uint32 modem_soft_reset_count = 10;
+  uint32 module_hard_reset_count = 11;
+  uint32 probe_fail_count = 12;
+
+  // Uptimes (seconds)
+  uint32 online_uptime_s = 13;
+  uint32 pdp_uptime_s = 14;
+  uint32 module_uptime_s = 15;
+
+  // Registration / RAT (data_reg)
+  uint32 reg_state = 16;  // ql_nw_reg_state_e
+  RadioRat rat = 17;
+  uint32 act = 18;        // ql_nw_act_type_e raw
+  uint32 lac_or_tac = 19;
+  uint32 cell_id = 20;
+
+  // RF / serving cell
+  uint32 csq = 21;        // 0-31, 99 unknown
+  int32 rssi_dbm = 22;
+  int32 ber = 23;
+  int32 rsrp = 24;        // LTE
+  int32 rsrq = 25;        // LTE
+  int32 sinr = 26;        // LTE
+  uint32 band = 27;
+  uint32 earfcn_or_freq = 28;
+  uint32 pci = 29;        // LTE
+  uint32 tdd_fdd = 30;    // LTE: 0 TDD, 1 FDD
+  uint32 bsic = 31;       // GSM
+  int32 rla = 32;         // GSM
+
+  // Operator
+  string mcc = 33;
+  string mnc = 34;
+  string oper_short = 35;
+}

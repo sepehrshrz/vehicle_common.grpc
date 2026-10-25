@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_history_v1;shared_d_history_v1";
+
+import "shared_d_common_v1.proto";
+import "shared_d_vehicle_v1.proto";
+
+// Compact GPS fix for history (GpsTelemetry core fields only; no sats arrays).
+message HistoryGpsFix {
+  double lat        = 1;
+  double lon        = 2;
+  float  alt        = 3;
+  float  spd        = 4;
+  float  heading    = 5;
+  bool   valid      = 6;
+  uint32 satellites = 7;
+  uint32 quality    = 8;
+  float  hdop       = 9;
+}
+
+// Compact status snapshot for trip history (no identity/radio/ussd).
+message StatusSample {
+  uint32 timestamp = 1;
+  optional HistoryGpsFix gps = 2;
+  optional VehicleStatus vehicle = 3;
+}
+
+// ACC-aligned status segment (uplink on ingest/telemetry/history).
+message StatusHistorySegment {
+  string device_id = 1;
+  string trip_id   = 2;  // "{device_id}:{acc_on_unix}"
+  uint32 t0        = 3;
+  uint32 t1        = 4;
+  uint32 seq       = 5;  // 0..n within trip
+  repeated StatusSample samples = 6;
+  ProtoVersion proto_version = 100;
+}
+
+// Runtime status-history recording settings (SET/GET_CONFIG).
+message StatusHistoryConfig {
+  bool   enabled   = 1;  // record while ACC on
+  uint32 spacing_m = 2;  // 5 | 10 | 15 (default 5)
+}
+
+// One completed ACC trip (start/end times).
+message TripSummary {
+  string trip_id = 1;  // "{device_id}:{acc_on_unix}"
+  uint32 t_start = 2;
+  uint32 t_end   = 3;
+}
+
+// Last N completed trips (uplink on ingest/telemetry/trips).
+message TripSummaryList {
+  string device_id = 1;
+  repeated TripSummary trips = 2;  // max 5, oldest -> newest
+  ProtoVersion proto_version = 100;
+}

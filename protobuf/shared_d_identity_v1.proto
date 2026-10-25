@@ -4,8 +4,8 @@ package device;
 
 option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_identity_v1;shared_d_identity_v1";
 
-
 import "shared_d_common_v1.proto";
+import "shared_d_boot_v1.proto";
 
 message DeviceIdentity {
   string device_id  = 1;
@@ -14,6 +14,10 @@ message DeviceIdentity {
   string cpu_uid    = 4;
   string model      = 5;
   string fw_version = 6;
+  optional BootInfo boot = 7;  // current boot_seq / kind / boot_at
+  string iccid      = 8;  // SIM ICCID (AT+QCCID / ql_sim_get_iccid)
+  string imsi       = 9;  // SIM IMSI (AT+CIMI / ql_sim_get_imsi)
+  string msisdn     = 10; // SIM own number (AT+CNUM / ql_sim_get_phonenumber); often empty
   // Additive schema version for hello root (MQTT ingest/telemetry/hello).
   ProtoVersion proto_version = 100;
 }

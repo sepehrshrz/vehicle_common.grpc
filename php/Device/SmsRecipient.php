@@ -23,6 +23,24 @@ class SmsRecipient extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string number = 2;</code>
      */
     protected $number = '';
+    /**
+     * bit0=ALERT bit1=COMMAND; 0 = both (legacy default)
+     *
+     * Generated from protobuf field <code>uint32 roles = 3;</code>
+     */
+    protected $roles = 0;
+    /**
+     * write-only over MQTT; never returned on GET
+     *
+     * Generated from protobuf field <code>string pin = 4;</code>
+     */
+    protected $pin = '';
+    /**
+     * GET: pin stored? SET: empty pin+pin_set=true clears; empty+false keeps
+     *
+     * Generated from protobuf field <code>bool pin_set = 5;</code>
+     */
+    protected $pin_set = false;
 
     /**
      * Constructor.
@@ -33,6 +51,12 @@ class SmsRecipient extends \Google\Protobuf\Internal\Message
      *     @type string $name
      *     @type string $number
      *           E.164, e.g. "+989123456789"
+     *     @type int $roles
+     *           bit0=ALERT bit1=COMMAND; 0 = both (legacy default)
+     *     @type string $pin
+     *           write-only over MQTT; never returned on GET
+     *     @type bool $pin_set
+     *           GET: pin stored? SET: empty pin+pin_set=true clears; empty+false keeps
      * }
      */
     public function __construct($data = NULL) {
@@ -84,6 +108,84 @@ class SmsRecipient extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->number = $var;
+
+        return $this;
+    }
+
+    /**
+     * bit0=ALERT bit1=COMMAND; 0 = both (legacy default)
+     *
+     * Generated from protobuf field <code>uint32 roles = 3;</code>
+     * @return int
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * bit0=ALERT bit1=COMMAND; 0 = both (legacy default)
+     *
+     * Generated from protobuf field <code>uint32 roles = 3;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setRoles($var)
+    {
+        GPBUtil::checkUint32($var);
+        $this->roles = $var;
+
+        return $this;
+    }
+
+    /**
+     * write-only over MQTT; never returned on GET
+     *
+     * Generated from protobuf field <code>string pin = 4;</code>
+     * @return string
+     */
+    public function getPin()
+    {
+        return $this->pin;
+    }
+
+    /**
+     * write-only over MQTT; never returned on GET
+     *
+     * Generated from protobuf field <code>string pin = 4;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setPin($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->pin = $var;
+
+        return $this;
+    }
+
+    /**
+     * GET: pin stored? SET: empty pin+pin_set=true clears; empty+false keeps
+     *
+     * Generated from protobuf field <code>bool pin_set = 5;</code>
+     * @return bool
+     */
+    public function getPinSet()
+    {
+        return $this->pin_set;
+    }
+
+    /**
+     * GET: pin stored? SET: empty pin+pin_set=true clears; empty+false keeps
+     *
+     * Generated from protobuf field <code>bool pin_set = 5;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setPinSet($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->pin_set = $var;
 
         return $this;
     }

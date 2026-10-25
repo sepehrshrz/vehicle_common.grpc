@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_boot_v1;shared_d_boot_v1";
+
+// Why this boot_seq started (hardware cause + intentional app crumb).
+enum BootKind {
+  BOOT_KIND_UNSPECIFIED = 0;
+
+  // Intentional software (crumb + QL_BOOTCAUSE_SW_RST)
+  BOOT_KIND_SW_FOTA = 1;
+  BOOT_KIND_SW_CMD_REBOOT = 2;
+  BOOT_KIND_SW_MODEM_RECOVER = 3;
+  BOOT_KIND_SW_UNEXPECTED = 4;   // SW_RST but no / invalid crumb
+
+  // Fault
+  BOOT_KIND_WATCHDOG = 5;        // QL_BOOTCAUSE_WDG
+  BOOT_KIND_PANIC = 6;           // QL_BOOTCAUSE_PANIC
+
+  // Cold / external (from boot_cause bits; first match wins)
+  BOOT_KIND_PWRKEY = 7;
+  BOOT_KIND_PIN_RESET = 8;
+  BOOT_KIND_ALARM = 9;
+  BOOT_KIND_CHARGE = 10;
+  BOOT_KIND_PIN_WAKEUP = 11;
+  BOOT_KIND_PSM_WAKEUP = 12;
+
+  BOOT_KIND_OTHER = 13;          // unknown / unmatched bits
+}
+
+// Current boot session (RAM + boot_seq persist). Attached to DeviceIdentity.
+message BootInfo {
+  uint32 boot_seq = 1;
+  BootKind kind = 2;
+  uint32 boot_at = 3;            // unix start of this boot_seq; 0 until clock reliable
+  uint32 module_uptime_s = 4;    // now - boot_at once boot_at set
+}

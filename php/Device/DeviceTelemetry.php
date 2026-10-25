@@ -39,6 +39,22 @@ class DeviceTelemetry extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>uint32 seq = 6;</code>
      */
     protected $seq = 0;
+    /**
+     * always filled by firmware
+     *
+     * Generated from protobuf field <code>optional .device.RadioStatus radio = 7;</code>
+     */
+    protected $radio = null;
+    /**
+     * Generated from protobuf field <code>optional .device.UssdBalanceStatus ussd_codes = 8;</code>
+     */
+    protected $ussd_codes = null;
+    /**
+     * set while ACC trip active; omit when idle
+     *
+     * Generated from protobuf field <code>optional string trip_id = 9;</code>
+     */
+    protected $trip_id = null;
 
     /**
      * Constructor.
@@ -52,6 +68,11 @@ class DeviceTelemetry extends \Google\Protobuf\Internal\Message
      *     @type \Device\VehicleStatus $vehicle
      *     @type int $timestamp
      *     @type int $seq
+     *     @type \Device\RadioStatus $radio
+     *           always filled by firmware
+     *     @type \Device\UssdBalanceStatus $ussd_codes
+     *     @type string $trip_id
+     *           set while ACC trip active; omit when idle
      * }
      */
     public function __construct($data = NULL) {
@@ -217,6 +238,110 @@ class DeviceTelemetry extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkUint32($var);
         $this->seq = $var;
+
+        return $this;
+    }
+
+    /**
+     * always filled by firmware
+     *
+     * Generated from protobuf field <code>optional .device.RadioStatus radio = 7;</code>
+     * @return \Device\RadioStatus|null
+     */
+    public function getRadio()
+    {
+        return $this->radio;
+    }
+
+    public function hasRadio()
+    {
+        return isset($this->radio);
+    }
+
+    public function clearRadio()
+    {
+        unset($this->radio);
+    }
+
+    /**
+     * always filled by firmware
+     *
+     * Generated from protobuf field <code>optional .device.RadioStatus radio = 7;</code>
+     * @param \Device\RadioStatus $var
+     * @return $this
+     */
+    public function setRadio($var)
+    {
+        GPBUtil::checkMessage($var, \Device\RadioStatus::class);
+        $this->radio = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .device.UssdBalanceStatus ussd_codes = 8;</code>
+     * @return \Device\UssdBalanceStatus|null
+     */
+    public function getUssdCodes()
+    {
+        return $this->ussd_codes;
+    }
+
+    public function hasUssdCodes()
+    {
+        return isset($this->ussd_codes);
+    }
+
+    public function clearUssdCodes()
+    {
+        unset($this->ussd_codes);
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .device.UssdBalanceStatus ussd_codes = 8;</code>
+     * @param \Device\UssdBalanceStatus $var
+     * @return $this
+     */
+    public function setUssdCodes($var)
+    {
+        GPBUtil::checkMessage($var, \Device\UssdBalanceStatus::class);
+        $this->ussd_codes = $var;
+
+        return $this;
+    }
+
+    /**
+     * set while ACC trip active; omit when idle
+     *
+     * Generated from protobuf field <code>optional string trip_id = 9;</code>
+     * @return string
+     */
+    public function getTripId()
+    {
+        return isset($this->trip_id) ? $this->trip_id : '';
+    }
+
+    public function hasTripId()
+    {
+        return isset($this->trip_id);
+    }
+
+    public function clearTripId()
+    {
+        unset($this->trip_id);
+    }
+
+    /**
+     * set while ACC trip active; omit when idle
+     *
+     * Generated from protobuf field <code>optional string trip_id = 9;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setTripId($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->trip_id = $var;
 
         return $this;
     }

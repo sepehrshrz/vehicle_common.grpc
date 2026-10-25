@@ -4,11 +4,11 @@ package device;
 
 option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_config_v1;shared_d_config_v1";
 
-
 import "shared_d_common_v1.proto";
 import "shared_d_gps_v1.proto";
 import "shared_d_vehicle_v1.proto";
 import "shared_d_telemetry_v1.proto";
+import "shared_d_history_v1.proto";
 
 message NetworkConfig {
   string apn  = 1;
@@ -19,11 +19,14 @@ message NetworkConfig {
 message SmsRecipient {
   string name   = 1;
   string number = 2;  // E.164, e.g. "+989123456789"
+  uint32 roles  = 3;  // bit0=ALERT bit1=COMMAND; 0 = both (legacy default)
+  string pin    = 4;  // write-only over MQTT; never returned on GET
+  bool   pin_set = 5; // GET: pin stored? SET: empty pin+pin_set=true clears; empty+false keeps
 }
 
 message SmsNotificationConfig {
   repeated SmsRecipient recipients = 1;  // max 5 (nanopb STATIC)
-  bool   enabled           = 2;  // master switch
+  bool   enabled           = 2;  // master switch (arm/disarm alerts)
   bool   enable_shock      = 3;
   bool   enable_acc_on     = 4;
   bool   enable_acc_off    = 5;
@@ -40,6 +43,27 @@ message LoggingConfig {
   uint32 level = 1;
 }
 
+// Per-operator USSD codes (server-driven; no hardcoded carriers).
+message UssdBalanceQuery {
+  string name = 1;          // e.g. "internet" | "sms" | "voice" | "number"
+  string code = 2;          // e.g. "*141*1#"
+  string extract_regex = 3; // optional hint; firmware best-effort digit scrape if set
+  bool once = 4;            // true = collect once successfully, then skip
+}
+
+message UssdBalanceOperatorConfig {
+  string mcc = 1;           // e.g. "432"
+  string mnc = 2;           // e.g. "11" / "35" / "20"
+  string operator_name = 3; // label only
+  repeated UssdBalanceQuery queries = 4;
+}
+
+message UssdBalanceConfig {
+  bool enabled = 1;
+  uint32 interval_s = 2;    // 0 = disabled periodic; min enforced in firmware
+  repeated UssdBalanceOperatorConfig operators = 3;
+}
+
 // Full/partial snapshot of current settings (read path).
 message DeviceConfiguration {
   NetworkConfig         network   = 1;
@@ -48,6 +72,8 @@ message DeviceConfiguration {
   LoggingConfig         logging   = 4;
   TelemetryConfig       telemetry = 5;
   VehicleConfig         vehicle   = 6;
+  UssdBalanceConfig     ussd_codes = 7;
+  StatusHistoryConfig   status_history = 8;
 }
 
 // Patch settings (write path). Same blocks; omit = leave unchanged.
@@ -60,5 +86,7 @@ message DeviceConfigurationUpdate {
   LoggingConfig         logging   = 5;
   VehicleConfig         vehicle   = 6;
   TelemetryConfig       telemetry = 7;
+  UssdBalanceConfig     ussd_codes = 8;
+  StatusHistoryConfig   status_history = 9;
   ProtoVersion proto_version = 100;
 }

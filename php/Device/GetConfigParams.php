@@ -39,6 +39,14 @@ class GetConfigParams extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool telemetry = 6;</code>
      */
     protected $telemetry = false;
+    /**
+     * Generated from protobuf field <code>bool ussd_codes = 7;</code>
+     */
+    protected $ussd_codes = false;
+    /**
+     * Generated from protobuf field <code>bool status_history = 8;</code>
+     */
+    protected $status_history = false;
 
     /**
      * Constructor.
@@ -52,6 +60,8 @@ class GetConfigParams extends \Google\Protobuf\Internal\Message
      *     @type bool $logging
      *     @type bool $vehicle
      *     @type bool $telemetry
+     *     @type bool $ussd_codes
+     *     @type bool $status_history
      * }
      */
     public function __construct($data = NULL) {
@@ -187,6 +197,50 @@ class GetConfigParams extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->telemetry = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool ussd_codes = 7;</code>
+     * @return bool
+     */
+    public function getUssdCodes()
+    {
+        return $this->ussd_codes;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool ussd_codes = 7;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setUssdCodes($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->ussd_codes = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool status_history = 8;</code>
+     * @return bool
+     */
+    public function getStatusHistory()
+    {
+        return $this->status_history;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool status_history = 8;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setStatusHistory($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->status_history = $var;
 
         return $this;
     }

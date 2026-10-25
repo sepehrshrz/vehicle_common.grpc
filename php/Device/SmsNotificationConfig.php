@@ -20,7 +20,7 @@ class SmsNotificationConfig extends \Google\Protobuf\Internal\Message
      */
     private $recipients;
     /**
-     * master switch
+     * master switch (arm/disarm alerts)
      *
      * Generated from protobuf field <code>bool enabled = 2;</code>
      */
@@ -75,7 +75,7 @@ class SmsNotificationConfig extends \Google\Protobuf\Internal\Message
      *     @type array<\Device\SmsRecipient>|\Google\Protobuf\Internal\RepeatedField $recipients
      *           max 5 (nanopb STATIC)
      *     @type bool $enabled
-     *           master switch
+     *           master switch (arm/disarm alerts)
      *     @type bool $enable_shock
      *     @type bool $enable_acc_on
      *     @type bool $enable_acc_off
@@ -120,7 +120,7 @@ class SmsNotificationConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * master switch
+     * master switch (arm/disarm alerts)
      *
      * Generated from protobuf field <code>bool enabled = 2;</code>
      * @return bool
@@ -131,7 +131,7 @@ class SmsNotificationConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * master switch
+     * master switch (arm/disarm alerts)
      *
      * Generated from protobuf field <code>bool enabled = 2;</code>
      * @param bool $var

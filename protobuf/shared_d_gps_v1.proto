@@ -4,7 +4,6 @@ package device;
 
 option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/d_gps_v1;d_gps_v1";
 
-
 // Backend contract for GpsTelemetry:
 // - valid=true: lat/lon/alt/spd/heading are trustworthy for navigation
 // - valid=false: use satellites/quality/hdop/pdop/avg_cnr/navmode for situational

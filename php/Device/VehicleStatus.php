@@ -53,6 +53,18 @@ class VehicleStatus extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>optional uint32 reported_at = 7;</code>
      */
     protected $reported_at = null;
+    /**
+     * ACC-off sleep sequence (true from ACC off until ACC on).
+     *
+     * Generated from protobuf field <code>optional bool sleeping = 8;</code>
+     */
+    protected $sleeping = null;
+    /**
+     * Seconds until HW sleep (GPS Standby + modem LPM); 0 if ACC on or already HW-asleep.
+     *
+     * Generated from protobuf field <code>optional uint32 sleep_in_s = 9;</code>
+     */
+    protected $sleep_in_s = null;
 
     /**
      * Constructor.
@@ -71,6 +83,10 @@ class VehicleStatus extends \Google\Protobuf\Internal\Message
      *     @type int $last_shock_at
      *     @type int $reported_at
      *           unix sec of this sample; always set
+     *     @type bool $sleeping
+     *           ACC-off sleep sequence (true from ACC off until ACC on).
+     *     @type int $sleep_in_s
+     *           Seconds until HW sleep (GPS Standby + modem LPM); 0 if ACC on or already HW-asleep.
      * }
      */
     public function __construct($data = NULL) {
@@ -314,6 +330,78 @@ class VehicleStatus extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkUint32($var);
         $this->reported_at = $var;
+
+        return $this;
+    }
+
+    /**
+     * ACC-off sleep sequence (true from ACC off until ACC on).
+     *
+     * Generated from protobuf field <code>optional bool sleeping = 8;</code>
+     * @return bool
+     */
+    public function getSleeping()
+    {
+        return isset($this->sleeping) ? $this->sleeping : false;
+    }
+
+    public function hasSleeping()
+    {
+        return isset($this->sleeping);
+    }
+
+    public function clearSleeping()
+    {
+        unset($this->sleeping);
+    }
+
+    /**
+     * ACC-off sleep sequence (true from ACC off until ACC on).
+     *
+     * Generated from protobuf field <code>optional bool sleeping = 8;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setSleeping($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->sleeping = $var;
+
+        return $this;
+    }
+
+    /**
+     * Seconds until HW sleep (GPS Standby + modem LPM); 0 if ACC on or already HW-asleep.
+     *
+     * Generated from protobuf field <code>optional uint32 sleep_in_s = 9;</code>
+     * @return int
+     */
+    public function getSleepInS()
+    {
+        return isset($this->sleep_in_s) ? $this->sleep_in_s : 0;
+    }
+
+    public function hasSleepInS()
+    {
+        return isset($this->sleep_in_s);
+    }
+
+    public function clearSleepInS()
+    {
+        unset($this->sleep_in_s);
+    }
+
+    /**
+     * Seconds until HW sleep (GPS Standby + modem LPM); 0 if ACC on or already HW-asleep.
+     *
+     * Generated from protobuf field <code>optional uint32 sleep_in_s = 9;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setSleepInS($var)
+    {
+        GPBUtil::checkUint32($var);
+        $this->sleep_in_s = $var;
 
         return $this;
     }

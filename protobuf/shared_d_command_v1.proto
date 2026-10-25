@@ -9,6 +9,7 @@ import "shared_d_config_v1.proto";
 import "shared_d_gps_v1.proto";
 import "shared_d_vehicle_v1.proto";
 import "shared_d_telemetry_v1.proto";
+import "shared_d_history_v1.proto";
 
 enum CommandStatus {
   CMD_UNSPECIFIED = 0;
@@ -29,6 +30,7 @@ enum CommandType {
   CMD_ENGINE     = 5;  // EngineParams.on: true=engine on, false=engine off
   CMD_SET_CONFIG = 6;  // SetConfigParams: patch blocks; omit = unchanged
   CMD_GPS_RECOVER = 7; // GpsRecoverParams: cold start / HW reset / full cold
+  CMD_SET_NW_MODE = 8; // NwModeParams: AUTO / GSM_2G / LTE_4G
 }
 
 message EchoParams {
@@ -54,6 +56,8 @@ message GetConfigParams {
   bool logging   = 4;
   bool vehicle   = 5;
   bool telemetry = 6;
+  bool ussd_codes = 7;
+  bool status_history = 8;
 }
 
 message EngineParams {
@@ -71,8 +75,19 @@ message GpsRecoverParams {
   GpsRecoverAction action = 1;
 }
 
+enum NwMode {
+  NW_MODE_UNSPECIFIED = 0;
+  NW_MODE_AUTO        = 1;  // LTE preferred
+  NW_MODE_GSM_2G      = 2;
+  NW_MODE_LTE_4G      = 3;
+}
+
+message NwModeParams {
+  NwMode mode = 1;
+}
+
 // Patch settings via command. Same blocks as DeviceConfigurationUpdate (omit = unchanged).
-// Field numbers are Update blocks 2–7 renumbered to 1–6 (no header / proto_version here).
+// Field numbers are Update blocks 2–8 renumbered to 1–7 (no header / proto_version here).
 message SetConfigParams {
   NetworkConfig         network   = 1;
   SmsNotificationConfig sms       = 2;
@@ -80,6 +95,8 @@ message SetConfigParams {
   LoggingConfig         logging   = 4;
   VehicleConfig         vehicle   = 5;
   TelemetryConfig       telemetry = 6;
+  UssdBalanceConfig     ussd_codes = 7;
+  StatusHistoryConfig   status_history = 8;
 }
 
 // MQTT root for device/{id}/command
@@ -87,7 +104,7 @@ message DeviceCommand {
   CommandHeader header = 1;
   CommandType   type   = 2;
   // Serialized EchoParams | RebootParams | FotaParams | GetConfigParams |
-  // EngineParams | SetConfigParams | GpsRecoverParams
+  // EngineParams | SetConfigParams | GpsRecoverParams | NwModeParams
   bytes         params = 3;
   ProtoVersion proto_version = 100;
 }
@@ -100,10 +117,11 @@ message FotaAckState {
 
 // Per-command snapshot carried in CommandResponse.previous / .applied.
 message CommandState {
-  optional DeviceConfiguration config = 1;  // SET_CONFIG / GET_CONFIG
-  optional EngineParams        engine = 2;  // CMD_ENGINE
-  optional string              echo   = 3;  // CMD_ECHO
-  optional FotaAckState        fota   = 4;  // CMD_FOTA
+  optional DeviceConfiguration config  = 1;  // SET_CONFIG / GET_CONFIG
+  optional EngineParams        engine  = 2;  // CMD_ENGINE
+  optional string              echo    = 3;  // CMD_ECHO
+  optional FotaAckState        fota    = 4;  // CMD_FOTA
+  optional NwModeParams        nw_mode = 5;  // CMD_SET_NW_MODE
 }
 
 message CommandResponse {

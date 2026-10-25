@@ -18,18 +18,21 @@ class SharedDConfigV1
         \GPBMetadata\SharedDGpsV1::initOnce();
         \GPBMetadata\SharedDVehicleV1::initOnce();
         \GPBMetadata\SharedDTelemetryV1::initOnce();
+        \GPBMetadata\SharedDHistoryV1::initOnce();
         $pool->internalAddGeneratedFile(
             '
-Å
-
-shared_d_config_v1.protodeviceshared_d_gps_v1.protoshared_d_vehicle_v1.protoshared_d_telemetry_v1.proto"8
+œ
+shared_d_config_v1.protodeviceshared_d_gps_v1.protoshared_d_vehicle_v1.protoshared_d_telemetry_v1.protoshared_d_history_v1.proto"8
 NetworkConfig
 apn (	
 user (	
-pass (	",
+pass (	"Y
 SmsRecipient
 name (	
-number (	"∑
+number (	
+roles (
+pin (	
+pin_set ("∑
 SmsNotificationConfig(
 
 recipients (2.device.SmsRecipient
@@ -47,14 +50,32 @@ msg_acc_on	 (	
 msg_door_open (	
 msg_door_close (	"
 LoggingConfig
-level ("Ö
+level ("S
+UssdBalanceQuery
+name (	
+code (	
+extract_regex (	
+once ("w
+UssdBalanceOperatorConfig
+mcc (	
+mnc (	
+operator_name (	)
+queries (2.device.UssdBalanceQuery"n
+UssdBalanceConfig
+enabled (
+
+interval_s (4
+	operators (2!.device.UssdBalanceOperatorConfig"È
 DeviceConfiguration&
 network (2.device.NetworkConfig*
 sms (2.device.SmsNotificationConfig
 gps (2.device.GpsConfig&
 logging (2.device.LoggingConfig*
 	telemetry (2.device.TelemetryConfig&
-vehicle (2.device.VehicleConfig"ﬂ
+vehicle (2.device.VehicleConfig-
+
+ussd_codes (2.device.UssdBalanceConfig3
+status_history (2.device.StatusHistoryConfig"√
 DeviceConfigurationUpdate%
 header (2.device.CommandHeader&
 network (2.device.NetworkConfig*
@@ -62,7 +83,10 @@ msg_acc_on	 (	
 gps (2.device.GpsConfig&
 logging (2.device.LoggingConfig&
 vehicle (2.device.VehicleConfig*
-	telemetry (2.device.TelemetryConfig+
+	telemetry (2.device.TelemetryConfig-
+
+ussd_codes (2.device.UssdBalanceConfig3
+status_history	 (2.device.StatusHistoryConfig+
 proto_versiond (2.device.ProtoVersionBZZXgithub.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_config_v1;shared_d_config_v1bproto3'
         , true);
 

@@ -39,6 +39,12 @@ class CommandState extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>optional .device.FotaAckState fota = 4;</code>
      */
     protected $fota = null;
+    /**
+     * CMD_SET_NW_MODE
+     *
+     * Generated from protobuf field <code>optional .device.NwModeParams nw_mode = 5;</code>
+     */
+    protected $nw_mode = null;
 
     /**
      * Constructor.
@@ -54,6 +60,8 @@ class CommandState extends \Google\Protobuf\Internal\Message
      *           CMD_ECHO
      *     @type \Device\FotaAckState $fota
      *           CMD_FOTA
+     *     @type \Device\NwModeParams $nw_mode
+     *           CMD_SET_NW_MODE
      * }
      */
     public function __construct($data = NULL) {
@@ -201,6 +209,42 @@ class CommandState extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Device\FotaAckState::class);
         $this->fota = $var;
+
+        return $this;
+    }
+
+    /**
+     * CMD_SET_NW_MODE
+     *
+     * Generated from protobuf field <code>optional .device.NwModeParams nw_mode = 5;</code>
+     * @return \Device\NwModeParams|null
+     */
+    public function getNwMode()
+    {
+        return $this->nw_mode;
+    }
+
+    public function hasNwMode()
+    {
+        return isset($this->nw_mode);
+    }
+
+    public function clearNwMode()
+    {
+        unset($this->nw_mode);
+    }
+
+    /**
+     * CMD_SET_NW_MODE
+     *
+     * Generated from protobuf field <code>optional .device.NwModeParams nw_mode = 5;</code>
+     * @param \Device\NwModeParams $var
+     * @return $this
+     */
+    public function setNwMode($var)
+    {
+        GPBUtil::checkMessage($var, \Device\NwModeParams::class);
+        $this->nw_mode = $var;
 
         return $this;
     }

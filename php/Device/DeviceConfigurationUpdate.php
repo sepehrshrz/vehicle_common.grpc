@@ -45,6 +45,14 @@ class DeviceConfigurationUpdate extends \Google\Protobuf\Internal\Message
      */
     protected $telemetry = null;
     /**
+     * Generated from protobuf field <code>.device.UssdBalanceConfig ussd_codes = 8;</code>
+     */
+    protected $ussd_codes = null;
+    /**
+     * Generated from protobuf field <code>.device.StatusHistoryConfig status_history = 9;</code>
+     */
+    protected $status_history = null;
+    /**
      * Generated from protobuf field <code>.device.ProtoVersion proto_version = 100;</code>
      */
     protected $proto_version = 0;
@@ -62,6 +70,8 @@ class DeviceConfigurationUpdate extends \Google\Protobuf\Internal\Message
      *     @type \Device\LoggingConfig $logging
      *     @type \Device\VehicleConfig $vehicle
      *     @type \Device\TelemetryConfig $telemetry
+     *     @type \Device\UssdBalanceConfig $ussd_codes
+     *     @type \Device\StatusHistoryConfig $status_history
      *     @type int $proto_version
      * }
      */
@@ -290,6 +300,70 @@ class DeviceConfigurationUpdate extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Device\TelemetryConfig::class);
         $this->telemetry = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.device.UssdBalanceConfig ussd_codes = 8;</code>
+     * @return \Device\UssdBalanceConfig|null
+     */
+    public function getUssdCodes()
+    {
+        return $this->ussd_codes;
+    }
+
+    public function hasUssdCodes()
+    {
+        return isset($this->ussd_codes);
+    }
+
+    public function clearUssdCodes()
+    {
+        unset($this->ussd_codes);
+    }
+
+    /**
+     * Generated from protobuf field <code>.device.UssdBalanceConfig ussd_codes = 8;</code>
+     * @param \Device\UssdBalanceConfig $var
+     * @return $this
+     */
+    public function setUssdCodes($var)
+    {
+        GPBUtil::checkMessage($var, \Device\UssdBalanceConfig::class);
+        $this->ussd_codes = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.device.StatusHistoryConfig status_history = 9;</code>
+     * @return \Device\StatusHistoryConfig|null
+     */
+    public function getStatusHistory()
+    {
+        return $this->status_history;
+    }
+
+    public function hasStatusHistory()
+    {
+        return isset($this->status_history);
+    }
+
+    public function clearStatusHistory()
+    {
+        unset($this->status_history);
+    }
+
+    /**
+     * Generated from protobuf field <code>.device.StatusHistoryConfig status_history = 9;</code>
+     * @param \Device\StatusHistoryConfig $var
+     * @return $this
+     */
+    public function setStatusHistory($var)
+    {
+        GPBUtil::checkMessage($var, \Device\StatusHistoryConfig::class);
+        $this->status_history = $var;
 
         return $this;
     }

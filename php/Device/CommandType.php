@@ -49,6 +49,12 @@ class CommandType
      * Generated from protobuf enum <code>CMD_GPS_RECOVER = 7;</code>
      */
     const CMD_GPS_RECOVER = 7;
+    /**
+     * NwModeParams: AUTO / GSM_2G / LTE_4G
+     *
+     * Generated from protobuf enum <code>CMD_SET_NW_MODE = 8;</code>
+     */
+    const CMD_SET_NW_MODE = 8;
 
     private static $valueToName = [
         self::CMD_TYPE_UNSPECIFIED => 'CMD_TYPE_UNSPECIFIED',
@@ -59,6 +65,7 @@ class CommandType
         self::CMD_ENGINE => 'CMD_ENGINE',
         self::CMD_SET_CONFIG => 'CMD_SET_CONFIG',
         self::CMD_GPS_RECOVER => 'CMD_GPS_RECOVER',
+        self::CMD_SET_NW_MODE => 'CMD_SET_NW_MODE',
     ];
 
     public static function name($value)

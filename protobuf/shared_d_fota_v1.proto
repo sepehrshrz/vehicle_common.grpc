@@ -4,7 +4,6 @@ package device;
 
 option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_fota_v1;shared_d_fota_v1";
 
-
 import "shared_d_common_v1.proto";
 
 message FotaStatus {

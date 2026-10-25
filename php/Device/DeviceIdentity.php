@@ -38,6 +38,30 @@ class DeviceIdentity extends \Google\Protobuf\Internal\Message
      */
     protected $fw_version = '';
     /**
+     * current boot_seq / kind / boot_at
+     *
+     * Generated from protobuf field <code>optional .device.BootInfo boot = 7;</code>
+     */
+    protected $boot = null;
+    /**
+     * SIM ICCID (AT+QCCID / ql_sim_get_iccid)
+     *
+     * Generated from protobuf field <code>string iccid = 8;</code>
+     */
+    protected $iccid = '';
+    /**
+     * SIM IMSI (AT+CIMI / ql_sim_get_imsi)
+     *
+     * Generated from protobuf field <code>string imsi = 9;</code>
+     */
+    protected $imsi = '';
+    /**
+     * SIM own number (AT+CNUM / ql_sim_get_phonenumber); often empty
+     *
+     * Generated from protobuf field <code>string msisdn = 10;</code>
+     */
+    protected $msisdn = '';
+    /**
      * Additive schema version for hello root (MQTT ingest/telemetry/hello).
      *
      * Generated from protobuf field <code>.device.ProtoVersion proto_version = 100;</code>
@@ -56,6 +80,14 @@ class DeviceIdentity extends \Google\Protobuf\Internal\Message
      *     @type string $cpu_uid
      *     @type string $model
      *     @type string $fw_version
+     *     @type \Device\BootInfo $boot
+     *           current boot_seq / kind / boot_at
+     *     @type string $iccid
+     *           SIM ICCID (AT+QCCID / ql_sim_get_iccid)
+     *     @type string $imsi
+     *           SIM IMSI (AT+CIMI / ql_sim_get_imsi)
+     *     @type string $msisdn
+     *           SIM own number (AT+CNUM / ql_sim_get_phonenumber); often empty
      *     @type int $proto_version
      *           Additive schema version for hello root (MQTT ingest/telemetry/hello).
      * }
@@ -193,6 +225,120 @@ class DeviceIdentity extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->fw_version = $var;
+
+        return $this;
+    }
+
+    /**
+     * current boot_seq / kind / boot_at
+     *
+     * Generated from protobuf field <code>optional .device.BootInfo boot = 7;</code>
+     * @return \Device\BootInfo|null
+     */
+    public function getBoot()
+    {
+        return $this->boot;
+    }
+
+    public function hasBoot()
+    {
+        return isset($this->boot);
+    }
+
+    public function clearBoot()
+    {
+        unset($this->boot);
+    }
+
+    /**
+     * current boot_seq / kind / boot_at
+     *
+     * Generated from protobuf field <code>optional .device.BootInfo boot = 7;</code>
+     * @param \Device\BootInfo $var
+     * @return $this
+     */
+    public function setBoot($var)
+    {
+        GPBUtil::checkMessage($var, \Device\BootInfo::class);
+        $this->boot = $var;
+
+        return $this;
+    }
+
+    /**
+     * SIM ICCID (AT+QCCID / ql_sim_get_iccid)
+     *
+     * Generated from protobuf field <code>string iccid = 8;</code>
+     * @return string
+     */
+    public function getIccid()
+    {
+        return $this->iccid;
+    }
+
+    /**
+     * SIM ICCID (AT+QCCID / ql_sim_get_iccid)
+     *
+     * Generated from protobuf field <code>string iccid = 8;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setIccid($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->iccid = $var;
+
+        return $this;
+    }
+
+    /**
+     * SIM IMSI (AT+CIMI / ql_sim_get_imsi)
+     *
+     * Generated from protobuf field <code>string imsi = 9;</code>
+     * @return string
+     */
+    public function getImsi()
+    {
+        return $this->imsi;
+    }
+
+    /**
+     * SIM IMSI (AT+CIMI / ql_sim_get_imsi)
+     *
+     * Generated from protobuf field <code>string imsi = 9;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setImsi($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->imsi = $var;
+
+        return $this;
+    }
+
+    /**
+     * SIM own number (AT+CNUM / ql_sim_get_phonenumber); often empty
+     *
+     * Generated from protobuf field <code>string msisdn = 10;</code>
+     * @return string
+     */
+    public function getMsisdn()
+    {
+        return $this->msisdn;
+    }
+
+    /**
+     * SIM own number (AT+CNUM / ql_sim_get_phonenumber); often empty
+     *
+     * Generated from protobuf field <code>string msisdn = 10;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setMsisdn($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->msisdn = $var;
 
         return $this;
     }

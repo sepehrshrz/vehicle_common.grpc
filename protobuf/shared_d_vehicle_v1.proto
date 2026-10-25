@@ -4,7 +4,6 @@ package device;
 
 option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/d_vehicle_v1;d_vehicle_v1";
 
-
 // Vehicle I/O. last_shock_at is sticky unix seconds (0 = never); notify when it
 // increases. Device always sets presence (nanopb OPTIONAL) so false/0 appear
 // on the wire whenever the vehicle block is included.
@@ -16,6 +15,10 @@ message VehicleStatus {
   optional uint32 bat_mv        = 5;
   optional uint32 last_shock_at = 6;
   optional uint32 reported_at   = 7;  // unix sec of this sample; always set
+  // ACC-off sleep sequence (true from ACC off until ACC on).
+  optional bool   sleeping      = 8;
+  // Seconds until HW sleep (GPS Standby + modem LPM); 0 if ACC on or already HW-asleep.
+  optional uint32 sleep_in_s    = 9;
 }
 
 message VehicleConfig {
@@ -24,4 +27,6 @@ message VehicleConfig {
   // Ignored by firmware: all VehicleStatus fields are always sent.
   // Kept for config wire compatibility (do not renumber).
   uint32 field_mask     = 3;
+  // ACC-off delayed sleep (modem autosleep). 0 = disabled. Omit on SET_CONFIG = unchanged.
+  optional uint32 sleep_after_acc_off_s = 4;
 }
