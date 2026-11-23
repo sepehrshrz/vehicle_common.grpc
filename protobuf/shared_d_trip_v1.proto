@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sepehrshrz/vehicle_common.grpc/genproto/shared_d_trip_v1;shared_d_trip_v1";
+
+import "shared_d_common_v1.proto";
+
+// One completed ACC trip (start/end times).
+message TripSummary {
+  string trip_id = 1;  // "{device_id}:{acc_on_unix}"
+  uint32 t_start = 2;
+  uint32 t_end   = 3;
+}
+
+// Last N completed trips (uplink on ingest/telemetry/trips).
+message TripSummaryList {
+  string device_id = 1;
+  repeated TripSummary trips = 2;  // max 5, oldest -> newest
+  ProtoVersion proto_version = 100;
+}

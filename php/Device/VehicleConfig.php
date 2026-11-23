@@ -38,6 +38,12 @@ class VehicleConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>optional uint32 sleep_after_acc_off_s = 4;</code>
      */
     protected $sleep_after_acc_off_s = null;
+    /**
+     * Light vs deep HW sleep. Omit on SET_CONFIG = unchanged. Default DEEP.
+     *
+     * Generated from protobuf field <code>optional .device.VehicleSleepMode sleep_mode = 5;</code>
+     */
+    protected $sleep_mode = null;
 
     /**
      * Constructor.
@@ -54,6 +60,8 @@ class VehicleConfig extends \Google\Protobuf\Internal\Message
      *           Kept for config wire compatibility (do not renumber).
      *     @type int $sleep_after_acc_off_s
      *           ACC-off delayed sleep (modem autosleep). 0 = disabled. Omit on SET_CONFIG = unchanged.
+     *     @type int $sleep_mode
+     *           Light vs deep HW sleep. Omit on SET_CONFIG = unchanged. Default DEEP.
      * }
      */
     public function __construct($data = NULL) {
@@ -173,6 +181,42 @@ class VehicleConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkUint32($var);
         $this->sleep_after_acc_off_s = $var;
+
+        return $this;
+    }
+
+    /**
+     * Light vs deep HW sleep. Omit on SET_CONFIG = unchanged. Default DEEP.
+     *
+     * Generated from protobuf field <code>optional .device.VehicleSleepMode sleep_mode = 5;</code>
+     * @return int
+     */
+    public function getSleepMode()
+    {
+        return isset($this->sleep_mode) ? $this->sleep_mode : 0;
+    }
+
+    public function hasSleepMode()
+    {
+        return isset($this->sleep_mode);
+    }
+
+    public function clearSleepMode()
+    {
+        unset($this->sleep_mode);
+    }
+
+    /**
+     * Light vs deep HW sleep. Omit on SET_CONFIG = unchanged. Default DEEP.
+     *
+     * Generated from protobuf field <code>optional .device.VehicleSleepMode sleep_mode = 5;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setSleepMode($var)
+    {
+        GPBUtil::checkEnum($var, \Device\VehicleSleepMode::class);
+        $this->sleep_mode = $var;
 
         return $this;
     }

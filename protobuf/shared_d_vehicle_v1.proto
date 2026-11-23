@@ -21,6 +21,12 @@ message VehicleStatus {
   optional uint32 sleep_in_s    = 9;
 }
 
+// ACC HW sleep depth after sleep_after_acc_off_s countdown.
+enum VehicleSleepMode {
+  VEHICLE_SLEEP_MODE_LIGHT = 0;  // GPS standby + MQTT down; RF stays registered
+  VEHICLE_SLEEP_MODE_DEEP  = 1;  // same + CFUN MIN (4G NETLIGHT off)
+}
+
 message VehicleConfig {
   uint32 post_period_ms = 1;  // state uplink interval when vehicle-driven (default 1000)
   string name           = 2;  // human-readable label, e.g. "Truck-12"
@@ -29,4 +35,6 @@ message VehicleConfig {
   uint32 field_mask     = 3;
   // ACC-off delayed sleep (modem autosleep). 0 = disabled. Omit on SET_CONFIG = unchanged.
   optional uint32 sleep_after_acc_off_s = 4;
+  // Light vs deep HW sleep. Omit on SET_CONFIG = unchanged. Default DEEP.
+  optional VehicleSleepMode sleep_mode = 5;
 }

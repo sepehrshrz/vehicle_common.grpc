@@ -43,17 +43,3 @@ message StatusHistoryConfig {
   bool   enabled   = 1;  // record while ACC on
   uint32 spacing_m = 2;  // 5 | 10 | 15 (default 5)
 }
-
-// One completed ACC trip (start/end times).
-message TripSummary {
-  string trip_id = 1;  // "{device_id}:{acc_on_unix}"
-  uint32 t_start = 2;
-  uint32 t_end   = 3;
-}
-
-// Last N completed trips (uplink on ingest/telemetry/trips).
-message TripSummaryList {
-  string device_id = 1;
-  repeated TripSummary trips = 2;  // max 5, oldest -> newest
-  ProtoVersion proto_version = 100;
-}
